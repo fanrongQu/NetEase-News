@@ -1,0 +1,35 @@
+//
+//  PrefixHeader.pch
+//  NetEase News
+//
+//  Created by 1860 on 16/6/14.
+//  Copyright © 2016年 FanrongQu. All rights reserved.
+//
+
+//#ifndef #define #endif能避免头文件的重定义
+//当第一次包含test.h时，由于没有定义_TEST_H，条件为真，这样就会包含（执行）#ifndef _TEST_H和
+//
+//#endif之间的代码，当第二次包含test.h时前面一次已经定义了_TEST_H，条件为假，#ifndef _TEST_H和
+//
+//#endif之间的代码也就不会再次被包含，这样就避免了重定义了。
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+
+//处理系统NSLog: NSLog就只在Debug下有输出，Release下不输出了
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#define NSLog_func() NSLog(@"%s", __func__)
+#else
+#define NSLog(...)
+#define NSLog_func()
+#endif
+
+//宏定义
+#import "UtilsMacro.h"
+#import "VendorMacro.h"
+#import "AppMacro.h"
+
+
+#endif /* PrefixHeader_pch */
