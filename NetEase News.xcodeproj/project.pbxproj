@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */; };
+		3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */; };
+		3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */; };
+		3B47EB641D12A08500E0555A /* FRSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B47EB631D12A08500E0555A /* FRSegmentedControl.m */; };
 		3BAB93C41D1138D700AF8D55 /* FRSlideMenuTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */; };
 		3BAB93C71D113EF800AF8D55 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C61D113EF800AF8D55 /* UIView+Frame.m */; };
 		3BAB93CA1D11476A00AF8D55 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C91D11476A00AF8D55 /* ChildViewController.m */; };
@@ -59,6 +62,10 @@
 /* Begin PBXFileReference section */
 		3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuController.h; sourceTree = "<group>"; };
 		3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuController.m; sourceTree = "<group>"; };
+		3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_highlighted@2x.png"; sourceTree = "<group>"; };
+		3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_normal@2x.png"; sourceTree = "<group>"; };
+		3B47EB621D12A08500E0555A /* FRSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSegmentedControl.h; sourceTree = "<group>"; };
+		3B47EB631D12A08500E0555A /* FRSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSegmentedControl.m; sourceTree = "<group>"; };
 		3BAB93C21D1138D700AF8D55 /* FRSlideMenuTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuTitleLabel.h; sourceTree = "<group>"; };
 		3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuTitleLabel.m; sourceTree = "<group>"; };
 		3BAB93C51D113EF800AF8D55 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
@@ -161,6 +168,8 @@
 		3B11FF411D10F9EE00295048 /* FRSlideMenuController */ = {
 			isa = PBXGroup;
 			children = (
+				3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */,
+				3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */,
 				3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */,
 				3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */,
 				3BAB93C21D1138D700AF8D55 /* FRSlideMenuTitleLabel.h */,
@@ -169,6 +178,15 @@
 				3BAB93CC1D114EEA00AF8D55 /* FRHorizontalLayout.m */,
 			);
 			path = FRSlideMenuController;
+			sourceTree = "<group>";
+		};
+		3B47EB611D12A02C00E0555A /* FRSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				3B47EB621D12A08500E0555A /* FRSegmentedControl.h */,
+				3B47EB631D12A08500E0555A /* FRSegmentedControl.m */,
+			);
+			path = FRSegmentedControl;
 			sourceTree = "<group>";
 		};
 		3BE831351D0FE930007888ED = {
@@ -386,6 +404,7 @@
 		3BE831861D0FEC09007888ED /* Vendors(第三方类库) */ = {
 			isa = PBXGroup;
 			children = (
+				3B47EB611D12A02C00E0555A /* FRSegmentedControl */,
 				3B11FF411D10F9EE00295048 /* FRSlideMenuController */,
 				3BE8319C1D1004A4007888ED /* FRTabBarController */,
 				3BE831931D100406007888ED /* FRNavigationController */,
@@ -741,6 +760,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */,
+				3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */,
 				3BE831511D0FE930007888ED /* LaunchScreen.storyboard in Resources */,
 				3BE831891D0FEC61007888ED /* Assets.xcassets in Resources */,
 				3BE8314C1D0FE930007888ED /* Main.storyboard in Resources */,
@@ -829,6 +850,7 @@
 				3BE831A81D1004A4007888ED /* FRTabBarItem.m in Sources */,
 				3BE831921D1001EB007888ED /* RootTabBarViewController.m in Sources */,
 				3BE831CA1D1007A4007888ED /* ReadViewController.m in Sources */,
+				3B47EB641D12A08500E0555A /* FRSegmentedControl.m in Sources */,
 				3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */,
 				3BE831A51D1004A4007888ED /* FRBadge.m in Sources */,
 				3BE8318C1D0FEE66007888ED /* AppDelegate+Category.m in Sources */,

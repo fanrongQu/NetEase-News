@@ -27,6 +27,9 @@ static CGFloat const TitleFontSize = 15;
 // 默认标题间距
 static CGFloat const margin = 20;
 
+//默认添加按钮宽度
+static CGFloat const addMenuViewW = 48;
+
 static NSString * const ID = @"FRSlideMenuCollectionCell";
 
 // 标题被点击或者滚动切换分类后，会发出这个通知。监听这个通知，加载数据
@@ -77,6 +80,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 /** 计算上一次选中角标 */
 @property (nonatomic, assign) NSInteger selIndex;
 
+/***  添加按钮  */
 @property (nonatomic, weak) UIButton *addMenuView;
 
 @end
@@ -231,6 +235,19 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     return _contentView;
 }
 
+- (UIButton *)addMenuView {
+    if (!_addMenuView) {
+        
+        UIButton *addMenuView = [[UIButton alloc]init];
+        [addMenuView setBackgroundImage:[UIImage imageNamed:@"addMenu_normal"] forState:UIControlStateNormal];
+        [addMenuView setBackgroundImage:[UIImage imageNamed:@"addMenu_highlighted"] forState:UIControlStateHighlighted];
+        [addMenuView addTarget:self action:@selector(showMoreMenuView) forControlEvents:UIControlEventTouchUpInside];
+        _addMenuView = addMenuView;
+        [self.view addSubview:addMenuView];
+    }
+    return _addMenuView;
+}
+
 #pragma mark - 属性setter方法
 
 - (void)setIsShowTitleScale:(BOOL)isShowTitleScale
@@ -265,9 +282,21 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 - (void)setIsfullScreen:(BOOL)isfullScreen
 {
     _isfullScreen = isfullScreen;
-    CGSize size = [UIScreen mainScreen].bounds.size;
-    self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
-    
+    if (isfullScreen) {
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
+    }
+}
+
+- (void)setIsShowAddMenuView:(BOOL)isShowAddMenuView {
+    _isShowAddMenuView = isShowAddMenuView;
+    if (isShowAddMenuView) {
+//        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin + addMenuViewW);
+        self.addMenuView.hidden = NO;
+    }else {
+        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+        self.addMenuView.hidden = YES;
+    }
 }
 
 // 设置整体内容的尺寸
@@ -324,13 +353,13 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 }
 
 // 一次性设置所有标题属性
-- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock{
+- (void)setUpTitleEffect:(void(^)(BOOL *isShowAddMenuView,UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock{
     UIColor *titleScrollViewColor;
     UIColor *norColor;
     UIColor *selColor;
     UIFont *titleFont;
     if (titleEffectBlock) {
-        titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
+        titleEffectBlock(&_isShowAddMenuView,&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
         _norColor = norColor;
         _selColor = selColor;
         _titleScrollViewColor = titleScrollViewColor;
@@ -367,6 +396,10 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     CGFloat titleH = _titleHeight?_titleHeight:FRTitleScrollViewH;
     CGFloat titleY = _isfullScreen?contentY:0;
     self.titleScrollView.frame = CGRectMake(contentX, titleY, contentW, titleH);
+    
+    //添加按钮frame
+    CGFloat addMenuViewX = [UIScreen mainScreen].bounds.size.width - addMenuViewW;
+    self.addMenuView.frame = CGRectMake(addMenuViewX, contentY, addMenuViewW, titleH);
     
     // 设置内容滚动视图frame
     CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
@@ -430,8 +463,8 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     CGFloat titleWidth = totalWidth + (count + 1) * margin;
     if (titleWidth > screenWidth) {
         _titleMargin = margin;
-        //为最后一个title增加右侧滚动距离
-        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+
+        [self setIsShowAddMenuView:_isShowAddMenuView];
         return;
     }
     
@@ -439,7 +472,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     
     _titleMargin = titleMargin < margin? margin: titleMargin;
     
-    self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+    [self setIsShowAddMenuView:_isShowAddMenuView];
 }
 
 - (void)setUpAllTitle {
@@ -486,9 +519,14 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
             [self titleClick:tap];
         }
     }
+    
     // 设置标题滚动视图的内容范围
     UILabel *lastLabel = self.titleLabels.lastObject;
-    _titleScrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastLabel.frame), 0);
+    CGFloat titleContentX = CGRectGetMaxX(lastLabel.frame);
+    if (_isShowAddMenuView) {
+        titleContentX = CGRectGetMaxX(lastLabel.frame) + addMenuViewW;
+    }
+    _titleScrollView.contentSize = CGSizeMake(titleContentX, 0);
     _titleScrollView.showsHorizontalScrollIndicator = NO;
     _contentScrollView.contentSize = CGSizeMake(count * [UIScreen mainScreen].bounds.size.width, 0);
 }
@@ -734,11 +772,15 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+//    if (_isShowAddMenuView) {
+//        screenWidth = [UIScreen mainScreen].bounds.size.width - addMenuViewW;
+//    }
     CGFloat offsetX = scrollView.contentOffset.x;
     NSInteger offsetXInt = offsetX;
     NSInteger screenWInt = screenWidth;
     
     NSInteger extre = offsetXInt % screenWInt;
+    
     if (extre > screenWidth * 0.5) {
         // 往右边移动
         offsetX = offsetX + (screenWidth - extre);
@@ -966,7 +1008,6 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     frame.origin.x += coverTransformX;
     self.coverView.frame = frame;
 }
-
 
 
 @end

@@ -75,14 +75,14 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIFont *titleFont;
 
 /**
- *  添加分类
+ *  是否可以添加分类
  */
-@property (nonatomic, assign) BOOL isShowAddButton;
+@property (nonatomic, assign) BOOL isShowAddMenuView;
 
 /**
  *  一次性设置所有标题属性
  */
-- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock;
+- (void)setUpTitleEffect:(void(^)(BOOL *isShowAddMenuView,UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock;
 
 
 #pragma mark - 下标
@@ -198,5 +198,9 @@ typedef enum : NSUInteger {
  */
 - (void)refreshDisplay;
 
+/**
+ *  点击加号按钮
+ */
+- (void)showMoreMenuView;
 
 @end

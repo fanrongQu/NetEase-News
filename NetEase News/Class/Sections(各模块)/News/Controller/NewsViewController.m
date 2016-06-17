@@ -50,9 +50,12 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
-    [self setUpTitleEffect:^(UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight) {
+    [self setUpTitleEffect:^(BOOL *isShowAddMenuView, UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight) {
+        *isShowAddMenuView = YES;
+        *norColor = [UIColor lightGrayColor];
         *titleHeight = 40;
     }];
+    
     
     // 标题渐变
     // *推荐方式(设置标题渐变)
@@ -76,33 +79,6 @@
         // 字体缩放比例
         *titleScale = 1.22;
     }];
-    
-    
-//    // *推荐方式(设置遮盖)
-//    [self setUpCoverEffect:^(BOOL *isShowTitleCover, UIColor **coverColor, CGFloat *coverCornerRadius) {
-//        // 设置是否显示标题蒙版
-//        *isShowTitleCover = YES;
-//        
-//        // 设置蒙版颜色
-//        *coverColor = [UIColor colorWithWhite:0.7 alpha:0.4];
-//        
-//        // 设置蒙版圆角半径
-//        *coverCornerRadius = 13;
-//    }];
-//    
-//    // 推荐方式（设置下标）
-//    [self setUpUnderLineEffect:^(BOOL *isShowUnderLine, BOOL *isDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
-//        
-//        // 是否显示标签
-//        *isShowUnderLine = YES;
-//        
-//        // 标题填充模式
-//        *underLineColor = [UIColor redColor];
-//        
-//        // 是否需要延迟滚动,下标不会随着拖动而改变
-////        *isDelayScroll = YES;
-//        
-//    }];
 }
 
 // 添加所有子控制器
@@ -154,6 +130,10 @@
     wordVc.title = @"段子";
     [self addChildViewController:wordVc];
     
+}
+
+- (void)showMoreMenuView {
+    NSLog(@"++++++");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
