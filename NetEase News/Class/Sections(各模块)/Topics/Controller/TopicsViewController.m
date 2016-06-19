@@ -7,6 +7,7 @@
 //
 
 #import "TopicsViewController.h"
+#import "ChildViewController.h"
 
 @interface TopicsViewController ()
 
@@ -16,22 +17,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self setNavigtionBar];
+    
+    [self setUpAllViewController];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)setNavigtionBar {
+    
+    self.navigationItem.titleView = self.segmentedView;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+// 添加所有子控制器
+- (void)setUpAllViewController
+{
+    
+    // 话题
+    ChildViewController *wordVc1 = [[ChildViewController alloc] init];
+    wordVc1.title = @"话题";
+    wordVc1.view.backgroundColor = [UIColor yellowColor];
+    [self addChildViewController:wordVc1];
+    
+    // 问吧
+    ChildViewController *wordVc2 = [[ChildViewController alloc] init];
+    wordVc2.title = @"问吧";
+    wordVc2.view.backgroundColor = [UIColor redColor];
+    [self addChildViewController:wordVc2];
+    
+    // 关注
+    ChildViewController *wordVc3 = [[ChildViewController alloc] init];
+    wordVc3.title = @"关注";
+    wordVc3.view.backgroundColor = [UIColor greenColor];
+    [self addChildViewController:wordVc3];
+    
 }
-*/
 
 @end

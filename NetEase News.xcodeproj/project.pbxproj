@@ -11,10 +11,11 @@
 		3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */; };
 		3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */; };
 		3B47EB641D12A08500E0555A /* FRSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B47EB631D12A08500E0555A /* FRSegmentedControl.m */; };
+		3B8F28661D15272000240F7C /* FRSegmentedHorizonLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8F28651D15272000240F7C /* FRSegmentedHorizonLayout.m */; };
 		3BAB93C41D1138D700AF8D55 /* FRSlideMenuTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */; };
 		3BAB93C71D113EF800AF8D55 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C61D113EF800AF8D55 /* UIView+Frame.m */; };
 		3BAB93CA1D11476A00AF8D55 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93C91D11476A00AF8D55 /* ChildViewController.m */; };
-		3BAB93CD1D114EEA00AF8D55 /* FRHorizontalLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93CC1D114EEA00AF8D55 /* FRHorizontalLayout.m */; };
+		3BAB93CD1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB93CC1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m */; };
 		3BE831431D0FE930007888ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE831421D0FE930007888ED /* main.m */; };
 		3BE8314C1D0FE930007888ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE8314A1D0FE930007888ED /* Main.storyboard */; };
 		3BE831511D0FE930007888ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE8314F1D0FE930007888ED /* LaunchScreen.storyboard */; };
@@ -66,14 +67,16 @@
 		3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_normal@2x.png"; sourceTree = "<group>"; };
 		3B47EB621D12A08500E0555A /* FRSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSegmentedControl.h; sourceTree = "<group>"; };
 		3B47EB631D12A08500E0555A /* FRSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSegmentedControl.m; sourceTree = "<group>"; };
+		3B8F28641D15272000240F7C /* FRSegmentedHorizonLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSegmentedHorizonLayout.h; sourceTree = "<group>"; };
+		3B8F28651D15272000240F7C /* FRSegmentedHorizonLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSegmentedHorizonLayout.m; sourceTree = "<group>"; };
 		3BAB93C21D1138D700AF8D55 /* FRSlideMenuTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuTitleLabel.h; sourceTree = "<group>"; };
 		3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuTitleLabel.m; sourceTree = "<group>"; };
 		3BAB93C51D113EF800AF8D55 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		3BAB93C61D113EF800AF8D55 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		3BAB93C81D11476A00AF8D55 /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		3BAB93C91D11476A00AF8D55 /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
-		3BAB93CB1D114EEA00AF8D55 /* FRHorizontalLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRHorizontalLayout.h; sourceTree = "<group>"; };
-		3BAB93CC1D114EEA00AF8D55 /* FRHorizontalLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRHorizontalLayout.m; sourceTree = "<group>"; };
+		3BAB93CB1D114EEA00AF8D55 /* FRSlideHorizontalLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideHorizontalLayout.h; sourceTree = "<group>"; };
+		3BAB93CC1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideHorizontalLayout.m; sourceTree = "<group>"; };
 		3BE8313E1D0FE930007888ED /* NetEase News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NetEase News.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BE831421D0FE930007888ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3BE8314B1D0FE930007888ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -174,8 +177,8 @@
 				3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */,
 				3BAB93C21D1138D700AF8D55 /* FRSlideMenuTitleLabel.h */,
 				3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */,
-				3BAB93CB1D114EEA00AF8D55 /* FRHorizontalLayout.h */,
-				3BAB93CC1D114EEA00AF8D55 /* FRHorizontalLayout.m */,
+				3BAB93CB1D114EEA00AF8D55 /* FRSlideHorizontalLayout.h */,
+				3BAB93CC1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m */,
 			);
 			path = FRSlideMenuController;
 			sourceTree = "<group>";
@@ -185,6 +188,8 @@
 			children = (
 				3B47EB621D12A08500E0555A /* FRSegmentedControl.h */,
 				3B47EB631D12A08500E0555A /* FRSegmentedControl.m */,
+				3B8F28641D15272000240F7C /* FRSegmentedHorizonLayout.h */,
+				3B8F28651D15272000240F7C /* FRSegmentedHorizonLayout.m */,
 			);
 			path = FRSegmentedControl;
 			sourceTree = "<group>";
@@ -840,8 +845,9 @@
 			files = (
 				3BE831DC1D1017D9007888ED /* NSData+Category.m in Sources */,
 				3BE8319B1D100406007888ED /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				3B8F28661D15272000240F7C /* FRSegmentedHorizonLayout.m in Sources */,
 				3BAB93C41D1138D700AF8D55 /* FRSlideMenuTitleLabel.m in Sources */,
-				3BAB93CD1D114EEA00AF8D55 /* FRHorizontalLayout.m in Sources */,
+				3BAB93CD1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m in Sources */,
 				3BAB93C71D113EF800AF8D55 /* UIView+Frame.m in Sources */,
 				3BE831A61D1004A4007888ED /* FRTabBar.m in Sources */,
 				3BE831D61D1009B9007888ED /* RootNavigationController.m in Sources */,

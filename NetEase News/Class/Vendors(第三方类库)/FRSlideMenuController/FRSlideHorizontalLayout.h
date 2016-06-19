@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FRHorizontalLayout : UICollectionViewFlowLayout
+@interface FRSlideHorizontalLayout : UICollectionViewFlowLayout
 
 @end

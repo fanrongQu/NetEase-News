@@ -8,7 +8,7 @@
 
 #import "FRSlideMenuController.h"
 #import "FRSlideMenuTitleLabel.h"
-#import "FRHorizontalLayout.h"
+#import "FRSlideHorizontalLayout.h"
 // 导航条高度
 static CGFloat const FRNavBarH = 64;
 
@@ -211,7 +211,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     if (_contentScrollView == nil) {
         
         // 创建并设置布局属性
-        FRHorizontalLayout *layout = [[FRHorizontalLayout alloc] init];
+        FRSlideHorizontalLayout *layout = [[FRSlideHorizontalLayout alloc] init];
       
         UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _contentScrollView = contentScrollView;
@@ -768,13 +768,11 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 
 #pragma mark - UIScrollViewDelegate
 
-// 减速完成
+// 减速完成后调用，每次拖拽只调用一次（松手后）
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-//    if (_isShowAddMenuView) {
-//        screenWidth = [UIScreen mainScreen].bounds.size.width - addMenuViewW;
-//    }
+
     CGFloat offsetX = scrollView.contentOffset.x;
     NSInteger offsetXInt = offsetX;
     NSInteger screenWInt = screenWidth;
@@ -1009,5 +1007,8 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     self.coverView.frame = frame;
 }
 
+- (void)showMoreMenuView {
+    NSLog(@"请实现showMoreMenuView方法来监听添加分类按钮的点击");
+}
 
 @end
