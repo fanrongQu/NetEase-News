@@ -22,18 +22,19 @@
     [self setNavigtionBar];
     
     [self setUpAllViewController];
-    self.contentFrame = CGRectMake(0, 164, [UIScreen mainScreen].bounds.size.width, 300);
-    
-    [self setUpSegmentedEffect:^(UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIColor *__autoreleasing *overColor, UIColor *__autoreleasing *normalBackColor, UIColor *__autoreleasing *selectBackColor) {
-        *overColor = [UIColor yellowColor];
-        
-    }];
+
 }
 
 
 - (void)setNavigtionBar {
     
     self.navigationItem.titleView = self.segmentedView;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"readernewslist_headerbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+}
+
+
+- (void)rightBarButtonItemClick {
+    
 }
 
 // 添加所有子控制器

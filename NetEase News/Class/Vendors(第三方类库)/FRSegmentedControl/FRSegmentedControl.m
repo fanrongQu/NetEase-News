@@ -382,7 +382,6 @@ static NSString *ID = @"FRSegmentedCollectionCell";
     UIViewController *vc = self.childViewControllers[indexPath.row];
     
     vc.view.frame = CGRectMake(0, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
-    NSLog(@"%f------%f--------%f",vc.view.frame.size.height,self.contentScrollView.frame.size.height,cell.frame.size.height);
     
     [cell.contentView addSubview:vc.view];
     

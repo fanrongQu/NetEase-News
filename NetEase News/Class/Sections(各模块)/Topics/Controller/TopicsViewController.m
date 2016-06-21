@@ -27,6 +27,18 @@
 - (void)setNavigtionBar {
     
     self.navigationItem.titleView = self.segmentedView;
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"searchBar_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"qa_login_normal"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+}
+
+- (void)leftBarButtonItemClick {
+    
+}
+
+- (void)rightBarButtonItemClick {
+    
 }
 
 // 添加所有子控制器
