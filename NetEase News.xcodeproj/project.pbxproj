@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */; };
+		3B28D6E71D19424F00C72E9A /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E61D19424F00C72E9A /* BaseModel.m */; };
+		3B28D6EA1D19432100C72E9A /* NewsMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E91D19432100C72E9A /* NewsMenuModel.m */; };
+		3B28D6EE1D19454300C72E9A /* BaseViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6ED1D19454300C72E9A /* BaseViewModel.m */; };
+		3B28D6F11D19462A00C72E9A /* NewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F01D19462A00C72E9A /* NewsViewModel.m */; };
+		3B28D6F71D19481F00C72E9A /* FRFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F41D19481F00C72E9A /* FRFormData.m */; };
+		3B28D6F81D19481F00C72E9A /* FRNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F61D19481F00C72E9A /* FRNetworking.m */; };
+		3B28D6FE1D195CF500C72E9A /* FRPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6FD1D195CF500C72E9A /* FRPlist.m */; };
+		3B28D7001D19710800C72E9A /* slideMenu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B28D6FF1D19710800C72E9A /* slideMenu.plist */; };
 		3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */; };
 		3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */; };
 		3B47EB641D12A08500E0555A /* FRSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B47EB631D12A08500E0555A /* FRSegmentedControl.m */; };
@@ -63,6 +71,21 @@
 /* Begin PBXFileReference section */
 		3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuController.h; sourceTree = "<group>"; };
 		3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuController.m; sourceTree = "<group>"; };
+		3B28D6E51D19424F00C72E9A /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		3B28D6E61D19424F00C72E9A /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		3B28D6E81D19432100C72E9A /* NewsMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsMenuModel.h; sourceTree = "<group>"; };
+		3B28D6E91D19432100C72E9A /* NewsMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsMenuModel.m; sourceTree = "<group>"; };
+		3B28D6EC1D19454300C72E9A /* BaseViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewModel.h; sourceTree = "<group>"; };
+		3B28D6ED1D19454300C72E9A /* BaseViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewModel.m; sourceTree = "<group>"; };
+		3B28D6EF1D19462A00C72E9A /* NewsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewModel.h; sourceTree = "<group>"; };
+		3B28D6F01D19462A00C72E9A /* NewsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewModel.m; sourceTree = "<group>"; };
+		3B28D6F31D19481F00C72E9A /* FRFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRFormData.h; sourceTree = "<group>"; };
+		3B28D6F41D19481F00C72E9A /* FRFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRFormData.m; sourceTree = "<group>"; };
+		3B28D6F51D19481F00C72E9A /* FRNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRNetworking.h; sourceTree = "<group>"; };
+		3B28D6F61D19481F00C72E9A /* FRNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRNetworking.m; sourceTree = "<group>"; };
+		3B28D6FC1D195CF500C72E9A /* FRPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRPlist.h; sourceTree = "<group>"; };
+		3B28D6FD1D195CF500C72E9A /* FRPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPlist.m; sourceTree = "<group>"; };
+		3B28D6FF1D19710800C72E9A /* slideMenu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = slideMenu.plist; sourceTree = "<group>"; };
 		3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_highlighted@2x.png"; sourceTree = "<group>"; };
 		3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_normal@2x.png"; sourceTree = "<group>"; };
 		3B47EB621D12A08500E0555A /* FRSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSegmentedControl.h; sourceTree = "<group>"; };
@@ -183,6 +206,26 @@
 			path = FRSlideMenuController;
 			sourceTree = "<group>";
 		};
+		3B28D6EB1D19452E00C72E9A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3B28D6EC1D19454300C72E9A /* BaseViewModel.h */,
+				3B28D6ED1D19454300C72E9A /* BaseViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3B28D6F21D19481F00C72E9A /* FRNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				3B28D6F31D19481F00C72E9A /* FRFormData.h */,
+				3B28D6F41D19481F00C72E9A /* FRFormData.m */,
+				3B28D6F51D19481F00C72E9A /* FRNetworking.h */,
+				3B28D6F61D19481F00C72E9A /* FRNetworking.m */,
+			);
+			path = FRNetworking;
+			sourceTree = "<group>";
+		};
 		3B47EB611D12A02C00E0555A /* FRSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +328,7 @@
 				3BE8317B1D0FEC09007888ED /* Core(公共核心类) */,
 				3BE8317C1D0FEC09007888ED /* Models(公共模型) */,
 				3BE8317D1D0FEC09007888ED /* Views(公共视图) */,
+				3B28D6EB1D19452E00C72E9A /* ViewModel */,
 			);
 			path = "General(通用类)";
 			sourceTree = "<group>";
@@ -314,6 +358,8 @@
 		3BE8317B1D0FEC09007888ED /* Core(公共核心类) */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6FC1D195CF500C72E9A /* FRPlist.h */,
+				3B28D6FD1D195CF500C72E9A /* FRPlist.m */,
 			);
 			path = "Core(公共核心类)";
 			sourceTree = "<group>";
@@ -321,6 +367,8 @@
 		3BE8317C1D0FEC09007888ED /* Models(公共模型) */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6E51D19424F00C72E9A /* BaseModel.h */,
+				3B28D6E61D19424F00C72E9A /* BaseModel.m */,
 			);
 			path = "Models(公共模型)";
 			sourceTree = "<group>";
@@ -409,6 +457,7 @@
 		3BE831861D0FEC09007888ED /* Vendors(第三方类库) */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6F21D19481F00C72E9A /* FRNetworking */,
 				3B47EB611D12A02C00E0555A /* FRSegmentedControl */,
 				3B11FF411D10F9EE00295048 /* FRSlideMenuController */,
 				3BE8319C1D1004A4007888ED /* FRTabBarController */,
@@ -499,6 +548,7 @@
 		3BE831AF1D1006E0007888ED /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6FF1D19710800C72E9A /* slideMenu.plist */,
 				3BE831C51D10077C007888ED /* NewsViewController.h */,
 				3BE831C61D10077C007888ED /* NewsViewController.m */,
 				3BAB93C81D11476A00AF8D55 /* ChildViewController.h */,
@@ -510,6 +560,8 @@
 		3BE831B01D1006E0007888ED /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6E81D19432100C72E9A /* NewsMenuModel.h */,
+				3B28D6E91D19432100C72E9A /* NewsMenuModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -517,6 +569,8 @@
 		3BE831B11D1006E0007888ED /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3B28D6EF1D19462A00C72E9A /* NewsViewModel.h */,
+				3B28D6F01D19462A00C72E9A /* NewsViewModel.m */,
 			);
 			path = viewModel;
 			sourceTree = "<group>";
@@ -765,6 +819,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B28D7001D19710800C72E9A /* slideMenu.plist in Resources */,
 				3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */,
 				3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */,
 				3BE831511D0FE930007888ED /* LaunchScreen.storyboard in Resources */,
@@ -844,27 +899,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BE831DC1D1017D9007888ED /* NSData+Category.m in Sources */,
+				3B28D6EE1D19454300C72E9A /* BaseViewModel.m in Sources */,
 				3BE8319B1D100406007888ED /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				3B8F28661D15272000240F7C /* FRSegmentedHorizonLayout.m in Sources */,
 				3BAB93C41D1138D700AF8D55 /* FRSlideMenuTitleLabel.m in Sources */,
+				3B28D6F71D19481F00C72E9A /* FRFormData.m in Sources */,
 				3BAB93CD1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m in Sources */,
 				3BAB93C71D113EF800AF8D55 /* UIView+Frame.m in Sources */,
 				3BE831A61D1004A4007888ED /* FRTabBar.m in Sources */,
+				3B28D6EA1D19432100C72E9A /* NewsMenuModel.m in Sources */,
 				3BE831D61D1009B9007888ED /* RootNavigationController.m in Sources */,
 				3BE831C41D100722007888ED /* BaseViewController.m in Sources */,
 				3BE831C71D10077C007888ED /* NewsViewController.m in Sources */,
+				3B28D6FE1D195CF500C72E9A /* FRPlist.m in Sources */,
 				3BE831A81D1004A4007888ED /* FRTabBarItem.m in Sources */,
 				3BE831921D1001EB007888ED /* RootTabBarViewController.m in Sources */,
 				3BE831CA1D1007A4007888ED /* ReadViewController.m in Sources */,
 				3B47EB641D12A08500E0555A /* FRSegmentedControl.m in Sources */,
+				3B28D6F11D19462A00C72E9A /* NewsViewModel.m in Sources */,
 				3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */,
 				3BE831A51D1004A4007888ED /* FRBadge.m in Sources */,
 				3BE8318C1D0FEE66007888ED /* AppDelegate+Category.m in Sources */,
 				3BE831991D100406007888ED /* FRNavigationController.m in Sources */,
 				3BE831A71D1004A4007888ED /* FRTabBarController.m in Sources */,
 				3BE831871D0FEC09007888ED /* AppDelegate.m in Sources */,
+				3B28D6E71D19424F00C72E9A /* BaseModel.m in Sources */,
 				3BE831CD1D1007BB007888ED /* ViedosViewController.m in Sources */,
 				3BE831431D0FE930007888ED /* main.m in Sources */,
+				3B28D6F81D19481F00C72E9A /* FRNetworking.m in Sources */,
 				3BE831D31D1007F0007888ED /* MeViewController.m in Sources */,
 				3BE831D01D1007D5007888ED /* TopicsViewController.m in Sources */,
 				3BAB93CA1D11476A00AF8D55 /* ChildViewController.m in Sources */,

@@ -10,4 +10,6 @@
 
 @interface ChildViewController : UIViewController
 
+@property (nonatomic, copy) NSString *tid;
+
 @end

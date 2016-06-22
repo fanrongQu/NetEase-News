@@ -12,6 +12,7 @@
 
 //自己封装的类库
 #import "FRNavigationController.h"
+#import "FRPlist.h"//plist文件操作
 
 //第三方框架头文件引入
 #import "AFNetworking.h"//网络请求框架
@@ -21,6 +22,8 @@
 #import "MJRefresh.h"//优秀的滚动视图头部和脚步刷新效果
 #import "UIImageView+WebCache.h"//让UIKit框架拥有网络功能,为UIImageView设置网络图片
 #import "UIButton+WebCache.h"//让UIKit框架拥有网络功能,为UIButton设置网络图片
+#import "NSData+Category.h"
+#import "UIView+Frame.h"
 
 /**
  *  Github开源的一个应用于iOS和OS开发的响应式编程、函数式编程框架，简称RAC

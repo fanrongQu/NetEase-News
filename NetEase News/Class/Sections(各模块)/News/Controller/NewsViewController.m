@@ -8,6 +8,7 @@
 
 #import "NewsViewController.h"
 #import "ChildViewController.h"
+#import "NewsViewModel.h"
 
 @interface NewsViewController ()
 
@@ -20,7 +21,8 @@
     
     [self setNavigationBar];
     
-    [self setNewsView];
+    [self getNewsMenus];
+    
 }
 
 - (void)setNavigationBar {
@@ -47,8 +49,6 @@
 }
 
 - (void)setNewsView{
-    // 添加所有子控制器
-    [self setUpAllViewController];
     
     [self setUpTitleEffect:^(BOOL *isShowAddMenuView, UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight) {
         *isShowAddMenuView = YES;
@@ -56,9 +56,7 @@
         *titleHeight = 40;
     }];
     
-    
-    // 标题渐变
-    // *推荐方式(设置标题渐变)
+    // 设置标题渐变
     [self setUpTitleGradient:^(BOOL *isShowTitleGradient, FRTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
         
         // 不需要设置的属性，可以不管
@@ -70,7 +68,7 @@
         
     }];
     
-    // 推荐方式 (设置字体缩放)
+    // 设置字体缩放
     [self setUpTitleScale:^(BOOL *isShowTitleScale, CGFloat *titleScale) {
         
         // 是否需要字体缩放
@@ -81,59 +79,44 @@
     }];
 }
 
+/**
+ *  获取所有新闻分类
+ */
+- (void)getNewsMenus {
+   
+    NewsViewModel *newsViewModel = [[NewsViewModel alloc]init];
+    
+    NSArray *slideMenus = [newsViewModel getSlideMenus];
+    
+    [self setUpAllViewControllerWithArray:slideMenus];
+}
+
 // 添加所有子控制器
-- (void)setUpAllViewController
+- (void)setUpAllViewControllerWithArray:(NSArray *)array
 {
+    NSInteger count = array.count;
+    for (int i = 0; i < count; i++) {
+        // 推荐
+        ChildViewController *childVC = [[ChildViewController alloc] init];
+        NewsMenuList *titleDict = array[i];
+        childVC.title = titleDict.tname;
+        childVC.tid = titleDict.tid;
+        [self addChildViewController:childVC];
+
+    }
     
-    // 推荐
-    ChildViewController *wordVc1 = [[ChildViewController alloc] init];
-    wordVc1.title = @"推荐";
-    [self addChildViewController:wordVc1];
-    
-    // 热点
-    ChildViewController *wordVc2 = [[ChildViewController alloc] init];
-    wordVc2.title = @"热点";
-    [self addChildViewController:wordVc2];
-    
-    // 社会
-    ChildViewController *wordVc3 = [[ChildViewController alloc] init];
-    wordVc3.title = @"社会";
-    [self addChildViewController:wordVc3];
-    
-    //体育
-    ChildViewController *wordVc4 = [[ChildViewController alloc] init];
-    wordVc4.title = @"体育";
-    [self addChildViewController:wordVc4];
-    
-    // 财经
-    ChildViewController *allVc = [[ChildViewController alloc] init];
-    allVc.title = @"财经";
-    [self addChildViewController:allVc];
-    
-    // 科技
-    ChildViewController *videoVc = [[ChildViewController alloc] init];
-    videoVc.title = @"科技";
-    [self addChildViewController:videoVc];
-    
-    // 房产
-    ChildViewController *voiceVc = [[ChildViewController alloc] init];
-    voiceVc.title = @"房产";
-    [self addChildViewController:voiceVc];
-    
-    // 图片
-    ChildViewController *pictureVc = [[ChildViewController alloc] init];
-    pictureVc.title = @"图片";
-    [self addChildViewController:pictureVc];
-    
-    // 段子
-    ChildViewController *wordVc = [[ChildViewController alloc] init];
-    wordVc.title = @"段子";
-    [self addChildViewController:wordVc];
-    
+    [self setNewsView];
 }
 
 - (void)showMoreMenuView {
     NSLog(@"++++++");
+    NewsViewModel *newsVM = [[NewsViewModel alloc]init];
+    [newsVM getNewsMenus:nil CompletionHandle:^(NSArray *completionArray, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        NSLog(@"%@",completionArray);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
