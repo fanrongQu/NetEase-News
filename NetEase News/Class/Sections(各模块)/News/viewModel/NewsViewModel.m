@@ -12,15 +12,21 @@
 
 - (NSArray *)getSlideMenus {
     
-    
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:NewsSlideMenuPlist ofType:@"plist"];
-    
-    NSArray *newsMenus = [NSArray arrayWithContentsOfFile:plistPath];
+    FRPlist *plist = [[FRPlist alloc]init];
+    NSArray *newsMenus = [plist arrayWithPlistName:NewsSlideMenuPlist];
+    if (newsMenus.count < 1) {
+        
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:NewsSlideMenuPlist ofType:@"plist"];
+        
+        newsMenus = [NSArray arrayWithContentsOfFile:plistPath];
+        
+        [plist writeArray:newsMenus toPlist:NewsSlideMenuPlist];
+    }
     
     return [NewsMenuList mj_objectArrayWithKeyValuesArray:newsMenus];
 }
 
-- (void)getNewsMenus:(NSDictionary *)paramaters CompletionHandle:(void(^)(NSArray *completionArray, NSError *error))completionHandle{
+- (void)getNewsMenus:(NSDictionary *)paramaters CompletionHandle:(void(^)(BOOL writeSucceed, NSError *error))completionHandle{
     
     
     FRPlist *plist = [[FRPlist alloc]init];
@@ -60,11 +66,12 @@
         FRPlist *plist = [[FRPlist alloc]init];
         if ([plist writeArray:otherMenus toPlist:NewsMoreMenuPlist]) {
             NSLog(@"写入成功");
+            completionHandle(YES, nil);
         }else {
             NSLog(@"写入失败");
+            
+            completionHandle(NO, nil);
         }
-        NSArray *moreMenus = [plist arrayWithPlistName:NewsMoreMenuPlist];
-        completionHandle([NewsMenuList mj_objectArrayWithKeyValuesArray:moreMenus], nil);
         
     } failure:^(NSError *error) {
         

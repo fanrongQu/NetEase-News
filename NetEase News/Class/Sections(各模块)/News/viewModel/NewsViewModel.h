@@ -19,6 +19,6 @@
 /**
  *  获取更多新闻分类
  */
-- (void)getNewsMenus:(NSDictionary *)paramaters CompletionHandle:(void(^)(NSArray *completionArray, NSError *error))completionHandle;
+- (void)getNewsMenus:(NSDictionary *)paramaters CompletionHandle:(void(^)(BOOL writeSucceed, NSError *error))completionHandle;
 
 @end

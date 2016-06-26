@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B02480F1D1F7B000006DC3E /* FRPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B02480E1D1F7B000006DC3E /* FRPlist.m */; };
+		3B0248121D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0248111D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m */; };
 		3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */; };
 		3B28D6E71D19424F00C72E9A /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E61D19424F00C72E9A /* BaseModel.m */; };
 		3B28D6EA1D19432100C72E9A /* NewsMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E91D19432100C72E9A /* NewsMenuModel.m */; };
@@ -14,7 +16,6 @@
 		3B28D6F11D19462A00C72E9A /* NewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F01D19462A00C72E9A /* NewsViewModel.m */; };
 		3B28D6F71D19481F00C72E9A /* FRFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F41D19481F00C72E9A /* FRFormData.m */; };
 		3B28D6F81D19481F00C72E9A /* FRNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6F61D19481F00C72E9A /* FRNetworking.m */; };
-		3B28D6FE1D195CF500C72E9A /* FRPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6FD1D195CF500C72E9A /* FRPlist.m */; };
 		3B28D7001D19710800C72E9A /* slideMenu.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B28D6FF1D19710800C72E9A /* slideMenu.plist */; };
 		3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */; };
 		3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */; };
@@ -69,6 +70,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B02480D1D1F7B000006DC3E /* FRPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRPlist.h; sourceTree = "<group>"; };
+		3B02480E1D1F7B000006DC3E /* FRPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPlist.m; sourceTree = "<group>"; };
+		3B0248101D1F86210006DC3E /* FRSlideMenuCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuCollectionViewCell.h; sourceTree = "<group>"; };
+		3B0248111D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuCollectionViewCell.m; sourceTree = "<group>"; };
 		3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuController.h; sourceTree = "<group>"; };
 		3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuController.m; sourceTree = "<group>"; };
 		3B28D6E51D19424F00C72E9A /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
@@ -83,8 +88,6 @@
 		3B28D6F41D19481F00C72E9A /* FRFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRFormData.m; sourceTree = "<group>"; };
 		3B28D6F51D19481F00C72E9A /* FRNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRNetworking.h; sourceTree = "<group>"; };
 		3B28D6F61D19481F00C72E9A /* FRNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRNetworking.m; sourceTree = "<group>"; };
-		3B28D6FC1D195CF500C72E9A /* FRPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRPlist.h; sourceTree = "<group>"; };
-		3B28D6FD1D195CF500C72E9A /* FRPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPlist.m; sourceTree = "<group>"; };
 		3B28D6FF1D19710800C72E9A /* slideMenu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = slideMenu.plist; sourceTree = "<group>"; };
 		3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_highlighted@2x.png"; sourceTree = "<group>"; };
 		3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addMenu_normal@2x.png"; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 		3B11FF411D10F9EE00295048 /* FRSlideMenuController */ = {
 			isa = PBXGroup;
 			children = (
+				3B02480D1D1F7B000006DC3E /* FRPlist.h */,
+				3B02480E1D1F7B000006DC3E /* FRPlist.m */,
 				3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */,
 				3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */,
 				3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */,
@@ -202,6 +207,8 @@
 				3BAB93C31D1138D700AF8D55 /* FRSlideMenuTitleLabel.m */,
 				3BAB93CB1D114EEA00AF8D55 /* FRSlideHorizontalLayout.h */,
 				3BAB93CC1D114EEA00AF8D55 /* FRSlideHorizontalLayout.m */,
+				3B0248101D1F86210006DC3E /* FRSlideMenuCollectionViewCell.h */,
+				3B0248111D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m */,
 			);
 			path = FRSlideMenuController;
 			sourceTree = "<group>";
@@ -358,8 +365,6 @@
 		3BE8317B1D0FEC09007888ED /* Core(公共核心类) */ = {
 			isa = PBXGroup;
 			children = (
-				3B28D6FC1D195CF500C72E9A /* FRPlist.h */,
-				3B28D6FD1D195CF500C72E9A /* FRPlist.m */,
 			);
 			path = "Core(公共核心类)";
 			sourceTree = "<group>";
@@ -911,7 +916,8 @@
 				3BE831D61D1009B9007888ED /* RootNavigationController.m in Sources */,
 				3BE831C41D100722007888ED /* BaseViewController.m in Sources */,
 				3BE831C71D10077C007888ED /* NewsViewController.m in Sources */,
-				3B28D6FE1D195CF500C72E9A /* FRPlist.m in Sources */,
+				3B0248121D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m in Sources */,
+				3B02480F1D1F7B000006DC3E /* FRPlist.m in Sources */,
 				3BE831A81D1004A4007888ED /* FRTabBarItem.m in Sources */,
 				3BE831921D1001EB007888ED /* RootTabBarViewController.m in Sources */,
 				3BE831CA1D1007A4007888ED /* ReadViewController.m in Sources */,

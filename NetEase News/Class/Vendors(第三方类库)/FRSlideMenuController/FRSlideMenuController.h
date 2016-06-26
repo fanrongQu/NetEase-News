@@ -203,4 +203,14 @@ typedef enum : NSUInteger {
  */
 - (void)showMoreMenuView;
 
+/**
+ *  展示分类菜单
+ */
+- (void)showMenuViewWithSlidePlistName:(NSString *)slideName OtherPlist:(NSString *)otherName;
+
+/**
+ *  隐藏添加分类视图
+ */
+- (void)cancleAddMenu:(UIButton *)button;
+
 @end

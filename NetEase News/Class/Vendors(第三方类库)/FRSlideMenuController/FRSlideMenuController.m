@@ -9,6 +9,9 @@
 #import "FRSlideMenuController.h"
 #import "FRSlideMenuTitleLabel.h"
 #import "FRSlideHorizontalLayout.h"
+#import "FRPlist.h"
+#import "FRSlideMenuCollectionViewCell.h"
+
 // 导航条高度
 static CGFloat const FRNavBarH = 64;
 
@@ -31,6 +34,8 @@ static CGFloat const margin = 20;
 static CGFloat const addMenuViewW = 48;
 
 static NSString * const ID = @"FRSlideMenuCollectionCell";
+
+static NSString * const menuID = @"FRMenuCollectionCell";
 
 // 标题被点击或者滚动切换分类后，会发出这个通知。监听这个通知，加载数据
 static NSString * const FRSlideMenuClickOrScrollDidFinshNote = @"FRSlideMenuClickOrScrollDidFinshNote";
@@ -82,6 +87,20 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 
 /***  添加按钮  */
 @property (nonatomic, weak) UIButton *addMenuView;
+
+/**
+ *  更多分类视图
+ */
+@property (nonatomic, strong) UICollectionView *menuView;
+
+@property (nonatomic, strong) UIView *menuTipView;
+
+@property (nonatomic, strong) NSMutableArray *menuArray;
+
+@property (nonatomic, copy) NSString *slidePlistName;
+
+@property (nonatomic, copy) NSString *otherPlistName;
+
 
 @end
 
@@ -734,6 +753,10 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     // 刷新表格
     [self.contentScrollView reloadData];
     
+    
+    //清空titleWidths
+    [self.titleWidths removeAllObjects];
+    
     // 重新设置标题
     [self setUpTitleWidth];
     
@@ -741,29 +764,247 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     
 }
 
+#pragma mark - 展示菜单分类视图
+
+- (void)showMenuViewWithSlidePlistName:(NSString *)slideName OtherPlist:(NSString *)otherName {
+    self.slidePlistName = slideName;
+    self.otherPlistName = otherName;
+    
+    FRPlist *plist = [[FRPlist alloc]init];
+    NSArray *slideArray = [plist arrayWithPlistName:slideName];
+    NSArray *otherArray = [plist arrayWithPlistName:otherName];
+    self.menuArray = [NSMutableArray arrayWithObjects:slideArray, otherArray, nil];
+    
+    //新闻分类管理头部视图
+    CGRect menuTipViewF = CGRectMake(0, 64, kSCreenWidth, 40);
+    self.menuTipView.frame = menuTipViewF;
+    [self setmenuTipView:self.menuTipView];
+    
+    CGFloat maxmenuTipViewY = CGRectGetMaxY(menuTipViewF);
+    CGFloat menuViewH = kSCreenHeight - maxmenuTipViewY;
+    CGRect menuViewF = CGRectMake(0, maxmenuTipViewY - menuViewH, kSCreenWidth, menuViewH);
+    self.menuView.frame = menuViewF;
+    [UIView animateWithDuration:0.6 animations:^{
+        self.menuView.frame=CGRectMake(0, maxmenuTipViewY, kSCreenWidth, menuViewH);
+    }];
+}
+
+
+- (void)setmenuTipView:(UIView *)menuTipView {
+    
+    UILabel *Label = [[UILabel alloc]initWithFrame:CGRectMake(12, 5, 100, 30)];
+    Label.text = @"切换栏目";
+    Label.font = kFontSize(14);
+    [menuTipView addSubview:Label];
+    
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(kSCreenWidth- 40, 0, 40, 40)];
+    [cancleBtn setImage:[UIImage imageNamed:@"addMenuBtn"] forState:UIControlStateNormal];
+    [cancleBtn setImage:[UIImage imageNamed:@"addMenuBtn"] forState:UIControlStateHighlighted];
+    [menuTipView addSubview:cancleBtn];
+    [cancleBtn addTarget:self action:@selector(cancleAddMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [self rotationAnimationWithView:cancleBtn];
+    
+    CGRect deleteBtnF = CGRectMake(kSCreenWidth - 120, 9, 70, 22);
+    UIButton *deleteBtn = [[UIButton alloc]initWithFrame:deleteBtnF];
+    [deleteBtn.layer setMasksToBounds:YES];
+    [deleteBtn.layer setCornerRadius:11];
+    [deleteBtn.layer setBorderWidth:1.2];
+    [deleteBtn.layer setBorderColor:kSubjectColor_day.CGColor];
+    
+    deleteBtn.titleLabel.font = kFontSize(13);
+    [deleteBtn setTitle:@"排序删除" forState:UIControlStateNormal];
+    [deleteBtn setTitleColor:kSubjectColor_day forState:UIControlStateNormal];
+    [deleteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [menuTipView addSubview:deleteBtn];
+}
+
+/**
+ *  隐藏添加分类视图
+ */
+- (void)cancleAddMenu:(UIButton *)button {
+    [self rotationAnimationWithView:button];
+    [UIView animateWithDuration:0.6 animations:^{
+        CGFloat maxmenuTipViewY = CGRectGetMaxY(self.menuTipView.frame);
+        CGFloat menuViewH = kSCreenHeight - maxmenuTipViewY;
+        _menuView.frame = CGRectMake(0, maxmenuTipViewY - menuViewH, kSCreenWidth, menuViewH);
+    }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.menuTipView removeFromSuperview];
+        [self.menuView removeFromSuperview];
+        self.menuTipView = nil;
+        self.menuView = nil;
+    });
+}
+
+
+#pragma mark 旋转动画
+-(void)rotationAnimationWithView:(UIView *)view {
+    //1.创建动画并指定动画属性
+    CABasicAnimation *basicAnimation=[CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    //2.设置动画属性初始值、结束值
+    basicAnimation.fromValue=[NSNumber numberWithInt:-M_PI_4];
+    //    basicAnimation.toValue=[NSNumber numberWithFloat:M_PI_4];
+    
+    //设置其他动画属性
+    basicAnimation.duration = 0.6;//动画时间
+    
+    //4.添加动画到图层，注意key相当于给动画进行命名，以后获得该动画时可以使用此名称获取
+    [view.layer addAnimation:basicAnimation forKey:@"KCBasicAnimation_Rotation"];
+}
+
+#pragma mark - 懒加载
+
+- (UIView *)menuTipView {
+    if (!_menuTipView) {
+        _menuTipView = [[UIView alloc]init];
+        _menuTipView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_menuTipView];
+    }
+    return _menuTipView;
+}
+
+
+- (UICollectionView *)menuView {
+    if (!_menuView) {
+        CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+        CGFloat itemW = 75;
+        CGFloat itemH = 30;
+        CGFloat margin = (screenW - itemW * 4)/5;
+        
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.itemSize = CGSizeMake(itemW , itemH);
+//        flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+//        flowLayout.minimumLineSpacing = margin;
+//        flowLayout.minimumInteritemSpacing = margin;
+        flowLayout.sectionInset = UIEdgeInsetsMake(margin, margin, margin, margin);
+        flowLayout.footerReferenceSize = CGSizeMake(screenW, 25);
+        
+        _menuView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _menuView.dataSource = self;
+        _menuView.delegate = self;
+        _menuView.backgroundColor = kUIColor_RGB(255, 255, 255, 0.9);
+        // 注册cell
+        [_menuView registerClass:[FRSlideMenuCollectionViewCell class] forCellWithReuseIdentifier:menuID];
+        //注册headerview
+        [_menuView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"menuFooterView"];
+
+        [self.view insertSubview:_menuView belowSubview:self.menuTipView];
+    }
+    return _menuView;
+}
+
+
+
+
 #pragma mark - UICollectionViewDataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if (collectionView == self.contentScrollView) {
+        return 1;
+    }else {
+        return _menuArray.count;
+    }
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.childViewControllers.count;
+    if (collectionView == self.contentScrollView) {
+        return self.childViewControllers.count;
+    }else {
+        NSArray *sectionArray = _menuArray[section];
+        return sectionArray.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    
+    if (collectionView == self.contentScrollView) {
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+        
+        // 移除之前的子控件
+        //    makeObjectsPerformSelector:@select（aMethod）
+        //    让数组中的每个元素 都调用 aMethod方法
+        [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        
+        // 添加控制器
+        UIViewController *vc = self.childViewControllers[indexPath.row];
+        
+        vc.view.frame = CGRectMake(0, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
+        
+        [cell.contentView addSubview:vc.view];
+        
+        return cell;
+    }
+    FRSlideMenuCollectionViewCell *slideMenucell = [collectionView dequeueReusableCellWithReuseIdentifier:menuID forIndexPath:indexPath];
+
     // 移除之前的子控件
     //    makeObjectsPerformSelector:@select（aMethod）
     //    让数组中的每个元素 都调用 aMethod方法
-    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [slideMenucell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    NSArray *menuSections = self.menuArray[indexPath.section];
+    NSDictionary *type = menuSections[indexPath.row];
+    NSString *name = type[@"tname"];
+    slideMenucell.title = name;
+    slideMenucell.titleL.text = name;
+    if (indexPath.row == 0&& indexPath.section == 0) {
+        slideMenucell.titleL.backgroundColor = [UIColor clearColor];
+        slideMenucell.titleL.textColor = [UIColor redColor];
+    }else {
+        
+        slideMenucell.titleL.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];;
+        slideMenucell.titleL.textColor = [UIColor blackColor];
+    }
+    return slideMenucell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (collectionView == self.contentScrollView) return;
+    NSLog(@"%ld,%ld",(long)indexPath.section,(long)indexPath.row);
     
-    // 添加控制器
-    UIViewController *vc = self.childViewControllers[indexPath.row];
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    if (section == 1) {
+        NSMutableArray *selectMenu =  [NSMutableArray arrayWithArray:_menuArray[0]];
+        NSMutableArray *otherMenu = [NSMutableArray arrayWithArray:_menuArray[1]];
+        NSDictionary *dict = otherMenu[row];
+        [selectMenu addObject:dict];
+        [otherMenu removeObjectAtIndex:row];
+        //保存到plist文件
+        FRPlist *plist = [[FRPlist alloc]init];
+        [plist writeArray:selectMenu toPlist:_slidePlistName];
+        [plist writeArray:otherMenu toPlist:_otherPlistName];
+        
+        self.menuArray = [NSMutableArray arrayWithObjects:selectMenu,otherMenu, nil];
+        [collectionView reloadData];
+    }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (collectionView == self.contentScrollView) return NO;
     
-    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
-   
-    [cell.contentView addSubview:vc.view];
+    if (indexPath.section == 0 &&indexPath.row == 0) return NO;
+    return YES;
+}
+
+
+//通过设置SupplementaryViewOfKind 来设置头部或者底部的view
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"menuFooterView" forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        
+        headerView.backgroundColor =[UIColor grayColor];
+        CGSize size = headerView.bounds.size;
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size.width - 20, size.height)];
+        label.text = @"点击添加更多栏目";
+        label.font = [UIFont systemFontOfSize:14];
+        headerView.backgroundColor = [UIColor colorWithRed:222/255.0 green:230/255.0 blue:230/255.0 alpha:1];
+        [headerView addSubview:label];
+        return headerView;
+    }
     
-    return cell;
+    return headerView;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -771,37 +1012,39 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 // 减速完成后调用，每次拖拽只调用一次（松手后）
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-
-    CGFloat offsetX = scrollView.contentOffset.x;
-    NSInteger offsetXInt = offsetX;
-    NSInteger screenWInt = screenWidth;
-    
-    NSInteger extre = offsetXInt % screenWInt;
-    
-    if (extre > screenWidth * 0.5) {
-        // 往右边移动
-        offsetX = offsetX + (screenWidth - extre);
-        _isAnimationing = YES;
-        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    }else if (extre < screenWidth * 0.5 && extre > 0){
-        _isAnimationing = YES;
-        // 往左边移动
-        offsetX =  offsetX - extre;
-        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    if (scrollView == self.contentScrollView) {
+        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+        
+        CGFloat offsetX = scrollView.contentOffset.x;
+        NSInteger offsetXInt = offsetX;
+        NSInteger screenWInt = screenWidth;
+        
+        NSInteger extre = offsetXInt % screenWInt;
+        
+        if (extre > screenWidth * 0.5) {
+            // 往右边移动
+            offsetX = offsetX + (screenWidth - extre);
+            _isAnimationing = YES;
+            [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        }else if (extre < screenWidth * 0.5 && extre > 0){
+            _isAnimationing = YES;
+            // 往左边移动
+            offsetX =  offsetX - extre;
+            [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        }
+        
+        // 获取角标
+        NSInteger i = offsetX / screenWidth;
+        
+        // 选中标题
+        [self selectLabel:self.titleLabels[i]];
+        
+        // 取出对应控制器发出通知
+        UIViewController *vc = self.childViewControllers[i];
+        
+        // 发出通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:FRSlideMenuClickOrScrollDidFinshNote object:vc];
     }
-    
-    // 获取角标
-    NSInteger i = offsetX / screenWidth;
-    
-    // 选中标题
-    [self selectLabel:self.titleLabels[i]];
-    
-    // 取出对应控制器发出通知
-    UIViewController *vc = self.childViewControllers[i];
-    
-    // 发出通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:FRSlideMenuClickOrScrollDidFinshNote object:vc];
 }
 
 
@@ -813,46 +1056,48 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    // 点击和动画的时候不需要设置
-    if (_isAnimationing || self.titleLabels.count == 0) return;
-    
-    // 获取偏移量
-    CGFloat offsetX = scrollView.contentOffset.x;
-    
-    // 获取左边角标
-    NSInteger leftIndex = offsetX / screenWidth;
-    
-    // 左边按钮
-    FRSlideMenuTitleLabel *leftLabel = self.titleLabels[leftIndex];
-    
-    // 右边角标
-    NSInteger rightIndex = leftIndex + 1;
-    
-    // 右边按钮
-    FRSlideMenuTitleLabel *rightLabel = nil;
-    
-    if (rightIndex < self.titleLabels.count) {
-        rightLabel = self.titleLabels[rightIndex];
-    }
-    
-    // 字体放大
-    [self setUpTitleScaleWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
-    
-    // 设置下标偏移
-    if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
+    if (scrollView == self.contentScrollView) {
+        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+        // 点击和动画的时候不需要设置
+        if (_isAnimationing || self.titleLabels.count == 0) return;
         
-        [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        // 获取偏移量
+        CGFloat offsetX = scrollView.contentOffset.x;
+        
+        // 获取左边角标
+        NSInteger leftIndex = offsetX / screenWidth;
+        
+        // 左边按钮
+        FRSlideMenuTitleLabel *leftLabel = self.titleLabels[leftIndex];
+        
+        // 右边角标
+        NSInteger rightIndex = leftIndex + 1;
+        
+        // 右边按钮
+        FRSlideMenuTitleLabel *rightLabel = nil;
+        
+        if (rightIndex < self.titleLabels.count) {
+            rightLabel = self.titleLabels[rightIndex];
+        }
+        
+        // 字体放大
+        [self setUpTitleScaleWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        
+        // 设置下标偏移
+        if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
+            
+            [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        }
+        
+        // 设置遮盖偏移
+        [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        
+        // 设置标题渐变
+        [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        
+        // 记录上一次的偏移量
+        _lastOffsetX = offsetX;
     }
-    
-    // 设置遮盖偏移
-    [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
-    
-    // 设置标题渐变
-    [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
-    
-    // 记录上一次的偏移量
-    _lastOffsetX = offsetX;
 }
 
 #pragma mark - 标题效果渐变方法
@@ -1008,7 +1253,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 }
 
 - (void)showMoreMenuView {
-    NSLog(@"请实现showMoreMenuView方法来监听添加分类按钮的点击");
+    NSLog(@"请实现showMoreMenuView方法来监听添加分类按钮的点击，并实现 \n\n- (void)showMenuViewWithSlidePlistName:(NSString *)slideName OtherPlist:(NSString *)otherName \n\n来展示分类菜单");
 }
 
 @end
