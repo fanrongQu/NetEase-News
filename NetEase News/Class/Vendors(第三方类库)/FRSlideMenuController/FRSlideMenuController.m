@@ -973,7 +973,12 @@
         [plist writeArray:otherMenu toPlist:_otherPlistName];
         
         self.menuArray = [NSMutableArray arrayWithObjects:selectMenu,otherMenu, nil];
-        [collectionView reloadData];
+        
+        NSIndexPath *deleteIndexPath = [NSIndexPath indexPathForItem:row inSection:section];
+        
+        NSIndexPath *addIndexPath = [NSIndexPath indexPathForItem:selectMenu.count - 1 inSection:0];
+        [self.menuView moveItemAtIndexPath:deleteIndexPath toIndexPath:addIndexPath];
+        
     }
 }
 
@@ -1029,7 +1034,11 @@
         [plist writeArray:otherMenu toPlist:_otherPlistName];
         
         self.menuArray = [NSMutableArray arrayWithObject:selectMenu];
-        [self.menuView reloadData];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:tag inSection:0];
+        [self.menuView deleteItemsAtIndexPaths:@[indexPath]];
+        if (tag == _selectIndex) {//如果删除的item是当前展示的新闻分类，新闻分类展示变为默认的（头条）
+            self.selectIndex = 0;
+        }
     }
 }
 /**
