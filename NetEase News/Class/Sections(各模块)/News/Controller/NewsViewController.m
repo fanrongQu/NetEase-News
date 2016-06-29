@@ -132,6 +132,7 @@
  *  隐藏添加分类视图
  */
 - (void)cancleAddMenu:(UIButton *)button {
+    
     [super cancleAddMenu:button];
     [self showTabBar];
     

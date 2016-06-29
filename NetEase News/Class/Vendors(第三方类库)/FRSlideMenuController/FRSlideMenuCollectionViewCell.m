@@ -36,7 +36,7 @@
         [self addSubview:deleteBtn];
         
         UILongPressGestureRecognizer *longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-        longPressGr.minimumPressDuration = 0.7;
+        longPressGr.minimumPressDuration = 0.6;
         _longPressGr = longPressGr;
     }
     return self;

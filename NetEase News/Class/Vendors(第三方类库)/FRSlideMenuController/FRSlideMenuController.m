@@ -526,7 +526,8 @@
 - (void)setSelectIndex:(NSInteger)selectIndex
 {
     _selectIndex = selectIndex;
-    if (self.titleLabels.count) {
+    NSInteger count = self.titleLabels.count;
+    if (count) {
         
         UILabel *label = self.titleLabels[selectIndex];
         
@@ -797,6 +798,7 @@
  *  隐藏添加分类视图
  */
 - (void)cancleAddMenu:(UIButton *)button {
+    self.showDeleteBtn = NO;
     [self rotationAnimationWithView:button];
     [UIView animateWithDuration:0.6 animations:^{
         CGFloat maxmenuTipViewY = CGRectGetMaxY(self.menuTipView.frame);
@@ -957,8 +959,9 @@
     
     if (section == 0) {
         self.showDeleteBtn = NO;
-        self.selectIndex = row;
         [[NSNotificationCenter defaultCenter]postNotificationName:FRSlideMenuClickMenuTitleNote object:nil userInfo:nil];
+        
+        self.selectIndex = row;
     }else if (section == 1) {
         NSMutableArray *selectMenu =  [NSMutableArray arrayWithArray:_menuArray[0]];
         NSMutableArray *otherMenu = [NSMutableArray arrayWithArray:_menuArray[1]];
