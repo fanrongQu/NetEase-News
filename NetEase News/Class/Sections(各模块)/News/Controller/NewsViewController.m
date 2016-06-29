@@ -24,6 +24,8 @@
     [self getNewsMenus];
     
     [self setNewsView];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clickMenuTitle:) name:FRSlideMenuClickMenuTitleNote object:nil];;
 }
 
 - (void)setNavigationBar {
@@ -47,6 +49,10 @@
 
 - (void)rightBarButtonItemClick {
     
+}
+
+- (void)clickMenuTitle:(NSNotification *)not {
+    [self cancleAddMenu:self.cancleBtn];
 }
 
 - (void)setNewsView{
@@ -108,7 +114,7 @@
 }
 
 - (void)showMoreMenuView {
-    NSLog(@"++++++");
+    NSLog_func();
     NewsViewModel *newsVM = [[NewsViewModel alloc]init];
     [newsVM getNewsMenus:nil CompletionHandle:^(BOOL writeSucceed, NSError *error) {
         if (error) {
@@ -153,8 +159,12 @@
     NSArray *subviews = self.tabBarController.view.subviews;
     UITabBar *tabBarView = [subviews objectAtIndex:1];
     [UIView animateWithDuration:0.6 animations:^{
-        tabBarView.frame=CGRectMake(0, kSCreenHeight, kSCreenWidth-49, 49);
+        tabBarView.frame=CGRectMake(0, kSCreenHeight-49, kSCreenWidth, 49);
     }];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 @end

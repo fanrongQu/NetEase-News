@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B02480F1D1F7B000006DC3E /* FRPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B02480E1D1F7B000006DC3E /* FRPlist.m */; };
 		3B0248121D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0248111D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m */; };
+		3B0248141D1FE40D0006DC3E /* hiddenMenuBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B0248131D1FE40D0006DC3E /* hiddenMenuBtn@2x.png */; };
+		3B0248161D1FE7B00006DC3E /* deleteItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B0248151D1FE7B00006DC3E /* deleteItem@2x.png */; };
 		3B11FF441D10FAAB00295048 /* FRSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */; };
 		3B28D6E71D19424F00C72E9A /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E61D19424F00C72E9A /* BaseModel.m */; };
 		3B28D6EA1D19432100C72E9A /* NewsMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B28D6E91D19432100C72E9A /* NewsMenuModel.m */; };
@@ -74,6 +76,8 @@
 		3B02480E1D1F7B000006DC3E /* FRPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPlist.m; sourceTree = "<group>"; };
 		3B0248101D1F86210006DC3E /* FRSlideMenuCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuCollectionViewCell.h; sourceTree = "<group>"; };
 		3B0248111D1F86210006DC3E /* FRSlideMenuCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuCollectionViewCell.m; sourceTree = "<group>"; };
+		3B0248131D1FE40D0006DC3E /* hiddenMenuBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hiddenMenuBtn@2x.png"; sourceTree = "<group>"; };
+		3B0248151D1FE7B00006DC3E /* deleteItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteItem@2x.png"; sourceTree = "<group>"; };
 		3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSlideMenuController.h; sourceTree = "<group>"; };
 		3B11FF431D10FAAB00295048 /* FRSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSlideMenuController.m; sourceTree = "<group>"; };
 		3B28D6E51D19424F00C72E9A /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 			children = (
 				3B02480D1D1F7B000006DC3E /* FRPlist.h */,
 				3B02480E1D1F7B000006DC3E /* FRPlist.m */,
+				3B0248151D1FE7B00006DC3E /* deleteItem@2x.png */,
+				3B0248131D1FE40D0006DC3E /* hiddenMenuBtn@2x.png */,
 				3B47EB5D1D128B6F00E0555A /* addMenu_highlighted@2x.png */,
 				3B47EB5E1D128B6F00E0555A /* addMenu_normal@2x.png */,
 				3B11FF421D10FAAB00295048 /* FRSlideMenuController.h */,
@@ -824,8 +830,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B0248141D1FE40D0006DC3E /* hiddenMenuBtn@2x.png in Resources */,
 				3B28D7001D19710800C72E9A /* slideMenu.plist in Resources */,
 				3B47EB601D128B6F00E0555A /* addMenu_normal@2x.png in Resources */,
+				3B0248161D1FE7B00006DC3E /* deleteItem@2x.png in Resources */,
 				3B47EB5F1D128B6F00E0555A /* addMenu_highlighted@2x.png in Resources */,
 				3BE831511D0FE930007888ED /* LaunchScreen.storyboard in Resources */,
 				3BE831891D0FEC61007888ED /* Assets.xcassets in Resources */,

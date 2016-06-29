@@ -10,6 +10,7 @@
 
 @interface FRSlideMenuCollectionViewCell()
 
+@property (nonatomic, strong) UILongPressGestureRecognizer * longPressGr;
 
 @end
 
@@ -25,20 +26,49 @@
         titleL.font = [UIFont systemFontOfSize:14];
         [titleL.layer setMasksToBounds:YES];
         [titleL.layer setCornerRadius:frame.size.height * 0.5];
+        self.titleL = titleL;
         [self addSubview:titleL];
         
-        self.titleL = titleL;
+        UIButton *deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 12, 12)];
+        [deleteBtn setImage:[UIImage imageNamed:@"deleteItem"] forState:UIControlStateNormal];
+        [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.deleteBtn = deleteBtn;
+        [self addSubview:deleteBtn];
+        
+        UILongPressGestureRecognizer *longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
+        longPressGr.minimumPressDuration = 1.0;
+        _longPressGr = longPressGr;
     }
     return self;
 }
 
 - (void)setTitle:(NSString *)title {
     _title = title;
-//    CGRect frame = self.contentView.frame;
-//    frame.origin = CGPointMake(0, 0);
-//    self.titleL.frame = frame;
     self.titleL.text = title;
     
+    if (_LongPressGesture) {
+        [self addGestureRecognizer:_longPressGr];
+    }else {
+        [self removeGestureRecognizer:_longPressGr];
+    }
+}
+
+
+- (void)deleteBtnClick:(UIButton *)sender {
+    if ([_delegate respondsToSelector:@selector(choseDeleteButton:)]) {
+        sender.tag = self.tag;
+        [_delegate choseDeleteButton:sender];
+    }
+}
+
+-(void)longPressToDo:(UILongPressGestureRecognizer *)gesture
+{
+    if(gesture.state == UIGestureRecognizerStateBegan)
+    {
+        if ([_delegate respondsToSelector:@selector(longPressButton)]) {
+            [_delegate longPressButton];
+        }
+    }
 }
 
 @end

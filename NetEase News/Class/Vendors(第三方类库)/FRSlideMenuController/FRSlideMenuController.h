@@ -21,8 +21,43 @@ typedef enum : NSUInteger {
  2.网易效果：颜色渐变 + 字体缩放
  3.进入头条效果：颜色填充渐变
  4.展示tableView的时候，如果有UITabBarController,UINavgationController,需要自己给tableView添加额外滚动区域。
- 
  */
+
+
+// 导航条高度
+static CGFloat const FRNavBarH = 64;
+
+// 标题滚动视图的高度
+static CGFloat const FRTitleScrollViewH = 44;
+
+// 标题缩放比例
+static CGFloat const FRTitleTransformScale = 1.3;
+
+// 下划线默认高度
+static CGFloat const FRUnderLineH = 2;
+
+// 默认标题字体
+static CGFloat const TitleFontSize = 15;
+
+// 默认标题间距
+static CGFloat const margin = 20;
+
+//默认添加按钮宽度
+static CGFloat const addMenuViewW = 48;
+
+static NSString * const ID = @"FRSlideMenuCollectionCell";
+
+static NSString * const menuID = @"FRMenuCollectionCell";
+
+// 标题被点击或者滚动切换分类后，会发出这个通知。监听这个通知，加载数据
+static NSString * const FRSlideMenuClickOrScrollDidFinshNote = @"FRSlideMenuClickOrScrollDidFinshNote";
+
+// 重复点击通知
+static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatClickTitleNote";
+
+// 点击切换栏目标题
+static NSString * const FRSlideMenuClickMenuTitleNote = @"FRSlideMenuClickMenuTitleNote";
+
 @interface FRSlideMenuController : UIViewController
 
 #pragma mark - 内容
@@ -202,6 +237,11 @@ typedef enum : NSUInteger {
  *  点击加号按钮
  */
 - (void)showMoreMenuView;
+
+/**
+ *  隐藏menu视图按钮
+ */
+@property (nonatomic, weak) UIButton *cancleBtn;
 
 /**
  *  展示分类菜单

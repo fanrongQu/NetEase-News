@@ -12,39 +12,8 @@
 #import "FRPlist.h"
 #import "FRSlideMenuCollectionViewCell.h"
 
-// 导航条高度
-static CGFloat const FRNavBarH = 64;
 
-// 标题滚动视图的高度
-static CGFloat const FRTitleScrollViewH = 44;
-
-// 标题缩放比例
-static CGFloat const FRTitleTransformScale = 1.3;
-
-// 下划线默认高度
-static CGFloat const FRUnderLineH = 2;
-
-// 默认标题字体
-static CGFloat const TitleFontSize = 15;
-
-// 默认标题间距
-static CGFloat const margin = 20;
-
-//默认添加按钮宽度
-static CGFloat const addMenuViewW = 48;
-
-static NSString * const ID = @"FRSlideMenuCollectionCell";
-
-static NSString * const menuID = @"FRMenuCollectionCell";
-
-// 标题被点击或者滚动切换分类后，会发出这个通知。监听这个通知，加载数据
-static NSString * const FRSlideMenuClickOrScrollDidFinshNote = @"FRSlideMenuClickOrScrollDidFinshNote";
-
-// 重复点击通知
-static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatClickTitleNote";
-
-
-@interface FRSlideMenuController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface FRSlideMenuController ()<UICollectionViewDataSource,UICollectionViewDelegate,FRSlideMenuCellDelegate>
 
 /** 整体内容View 包含标题好内容滚动视图 */
 @property (nonatomic, weak) UIView *contentView;
@@ -100,7 +69,10 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 @property (nonatomic, copy) NSString *slidePlistName;
 
 @property (nonatomic, copy) NSString *otherPlistName;
-
+/***  是否显示Item的删除按钮  */
+@property (nonatomic, assign) BOOL showDeleteBtn;
+/***  顶部排序删除按钮  */
+@property (nonatomic, weak) UIButton *deleteBtn;
 
 @end
 
@@ -798,11 +770,12 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     [menuTipView addSubview:Label];
     
     UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(kSCreenWidth- 40, 0, 40, 40)];
-    [cancleBtn setImage:[UIImage imageNamed:@"addMenuBtn"] forState:UIControlStateNormal];
-    [cancleBtn setImage:[UIImage imageNamed:@"addMenuBtn"] forState:UIControlStateHighlighted];
+    [cancleBtn setImage:[UIImage imageNamed:@"hiddenMenuBtn"] forState:UIControlStateNormal];
+    [cancleBtn setImage:[UIImage imageNamed:@"hiddenMenuBtn"] forState:UIControlStateHighlighted];
     [menuTipView addSubview:cancleBtn];
     [cancleBtn addTarget:self action:@selector(cancleAddMenu:) forControlEvents:UIControlEventTouchUpInside];
     [self rotationAnimationWithView:cancleBtn];
+    _cancleBtn = cancleBtn;
     
     CGRect deleteBtnF = CGRectMake(kSCreenWidth - 120, 9, 70, 22);
     UIButton *deleteBtn = [[UIButton alloc]initWithFrame:deleteBtnF];
@@ -815,6 +788,8 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     [deleteBtn setTitle:@"排序删除" forState:UIControlStateNormal];
     [deleteBtn setTitleColor:kSubjectColor_day forState:UIControlStateNormal];
     [deleteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _deleteBtn = deleteBtn;
     [menuTipView addSubview:deleteBtn];
 }
 
@@ -879,7 +854,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
 //        flowLayout.minimumLineSpacing = margin;
 //        flowLayout.minimumInteritemSpacing = margin;
         flowLayout.sectionInset = UIEdgeInsetsMake(margin, margin, margin, margin);
-        flowLayout.footerReferenceSize = CGSizeMake(screenW, 25);
+//        flowLayout.footerReferenceSize = CGSizeMake(screenW, 25);
         
         _menuView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _menuView.dataSource = self;
@@ -888,7 +863,7 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
         // 注册cell
         [_menuView registerClass:[FRSlideMenuCollectionViewCell class] forCellWithReuseIdentifier:menuID];
         //注册headerview
-        [_menuView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"menuFooterView"];
+        [_menuView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"menuHeaderView"];
 
         [self.view insertSubview:_menuView belowSubview:self.menuTipView];
     }
@@ -942,29 +917,51 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     //    makeObjectsPerformSelector:@select（aMethod）
     //    让数组中的每个元素 都调用 aMethod方法
     [slideMenucell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    if (indexPath.section == 0) {//给第一组添加长按手势
+        slideMenucell.LongPressGesture = YES;
+    }else {
+        slideMenucell.LongPressGesture = NO;
+    }
+    
+    if (_showDeleteBtn) {//是否显示移除按钮
+        slideMenucell.deleteBtn.hidden = NO;
+    }else {
+        slideMenucell.deleteBtn.hidden = YES;
+    }
+    
     NSArray *menuSections = self.menuArray[indexPath.section];
     NSDictionary *type = menuSections[indexPath.row];
     NSString *name = type[@"tname"];
     slideMenucell.title = name;
     slideMenucell.titleL.text = name;
-    if (indexPath.row == 0&& indexPath.section == 0) {
+    
+    slideMenucell.titleL.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];;
+    slideMenucell.titleL.textColor = [UIColor blackColor];
+    if (indexPath.row == 0 && indexPath.section == 0) {//第一个Item不可改变
         slideMenucell.titleL.backgroundColor = [UIColor clearColor];
         slideMenucell.titleL.textColor = [UIColor redColor];
+        slideMenucell.deleteBtn.hidden = YES;
     }else {
-        
-        slideMenucell.titleL.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1];;
-        slideMenucell.titleL.textColor = [UIColor blackColor];
+        slideMenucell.delegate = self;
     }
+    
+    NSInteger row = indexPath.row;
+    slideMenucell.tag = row;
     return slideMenucell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == self.contentScrollView) return;
-    NSLog(@"%ld,%ld",(long)indexPath.section,(long)indexPath.row);
     
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 1) {
+    
+    if (section == 0) {
+        
+        self.selectIndex = row;
+        [[NSNotificationCenter defaultCenter]postNotificationName:FRSlideMenuClickMenuTitleNote object:nil userInfo:nil];
+    }else if (section == 1) {
         NSMutableArray *selectMenu =  [NSMutableArray arrayWithArray:_menuArray[0]];
         NSMutableArray *otherMenu = [NSMutableArray arrayWithArray:_menuArray[1]];
         NSDictionary *dict = otherMenu[row];
@@ -987,12 +984,19 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     return YES;
 }
 
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return CGSizeMake(0, 0);
+    }
+    return CGSizeMake([UIScreen mainScreen].bounds.size.width, 25);
+}
+
 
 //通过设置SupplementaryViewOfKind 来设置头部或者底部的view
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"menuFooterView" forIndexPath:indexPath];
-    if (indexPath.section == 0) {
+    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"menuHeaderView" forIndexPath:indexPath];
+    if (indexPath.section == 1) {
         
         headerView.backgroundColor =[UIColor grayColor];
         CGSize size = headerView.bounds.size;
@@ -1005,6 +1009,58 @@ static NSString * const FRSlideMenuRepeatClickTitleNote = @"FRSlideMenuRepeatCli
     }
     
     return headerView;
+}
+
+/**
+ *  点击cell的删除按钮
+ */
+- (void)choseDeleteButton:(UIButton *)button {
+    NSInteger tag = button.tag;
+    if (tag) {
+        
+        FRPlist *plist = [[FRPlist alloc]init];
+        NSMutableArray *selectMenu = (NSMutableArray *)[plist arrayWithPlistName:_slidePlistName];
+        NSMutableArray *otherMenu = (NSMutableArray *)[plist arrayWithPlistName:_otherPlistName];
+        NSDictionary *dict = selectMenu[tag];
+        [otherMenu insertObject:dict atIndex:0];
+        [selectMenu removeObjectAtIndex:tag];
+        //保存到plist文件
+        [plist writeArray:selectMenu toPlist:_slidePlistName];
+        [plist writeArray:otherMenu toPlist:_otherPlistName];
+        
+        self.menuArray = [NSMutableArray arrayWithObject:selectMenu];
+        [self.menuView reloadData];
+    }
+}
+/**
+ *  长按选项按钮
+ */
+- (void)longPressButton {
+    [self.deleteBtn setTitle:@"完成" forState:UIControlStateNormal];
+    FRPlist *plist = [[FRPlist alloc]init];
+    NSArray *selectMenu = [plist arrayWithPlistName:_slidePlistName];
+    self.showDeleteBtn = YES;
+    self.menuArray = [NSMutableArray arrayWithObject:selectMenu];
+    [self.menuView reloadData];
+
+}
+/**
+ *  排序删除按钮点击
+ *
+ *  @param button 排序删除按钮
+ */
+- (void)deleteBtnClick:(UIButton *)button {
+    if ([button.titleLabel.text isEqualToString:@"排序删除"]) {
+        [self longPressButton];
+    }else if ([button.titleLabel.text isEqualToString:@"完成"]) {
+        FRPlist *plist = [[FRPlist alloc]init];
+        NSArray *selectMenu = [plist arrayWithPlistName:_slidePlistName];
+        NSArray *otherMenu = [plist arrayWithPlistName:_otherPlistName];
+        self.showDeleteBtn = NO;
+        self.menuArray = [NSMutableArray arrayWithObjects:selectMenu, otherMenu, nil];
+        [self.menuView reloadData];
+        [self.deleteBtn setTitle:@"排序删除" forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
