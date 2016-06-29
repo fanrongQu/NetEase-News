@@ -14,6 +14,9 @@
 
 - (void)longPressButton;
 
+- (void)moveCollectionViewCell:(UILongPressGestureRecognizer *)longGesture
+;
+
 @end
 
 

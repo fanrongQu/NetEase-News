@@ -946,8 +946,6 @@
         slideMenucell.delegate = self;
     }
     
-    NSInteger row = indexPath.row;
-    slideMenucell.tag = row;
     return slideMenucell;
 }
 
@@ -958,7 +956,7 @@
     NSInteger row = indexPath.row;
     
     if (section == 0) {
-        
+        self.showDeleteBtn = NO;
         self.selectIndex = row;
         [[NSNotificationCenter defaultCenter]postNotificationName:FRSlideMenuClickMenuTitleNote object:nil userInfo:nil];
     }else if (section == 1) {
@@ -989,6 +987,26 @@
     return YES;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
+    //取出源item数据
+    NSMutableArray *selectArray = (NSMutableArray *)[_menuArray objectAtIndex:sourceIndexPath.section];
+    id objc = [selectArray objectAtIndex:sourceIndexPath.row];
+    //从资源数组中移除该数据
+    [selectArray removeObject:objc];
+    //将数据插入到资源数组中的目标位置上
+    [selectArray insertObject:objc atIndex:destinationIndexPath.row];
+    
+//    NSMutableArray *selectMenu =  [NSMutableArray arrayWithArray:_menuArray[0]];
+//    NSMutableArray *otherMenu = [NSMutableArray arrayWithArray:_menuArray[1]];
+//    NSDictionary *dict = otherMenu[row];
+//    [selectMenu addObject:dict];
+//    [otherMenu removeObjectAtIndex:row];
+    //保存到plist文件
+    FRPlist *plist = [[FRPlist alloc]init];
+    [plist writeArray:selectArray toPlist:_slidePlistName];
+//    [plist writeArray:otherMenu toPlist:_otherPlistName];
+}
+
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return CGSizeMake(0, 0);
@@ -1016,27 +1034,32 @@
     return headerView;
 }
 
+#pragma mark - FRSlideMenuCollectionViewCell delegate
+
 /**
  *  点击cell的删除按钮
  */
 - (void)choseDeleteButton:(UIButton *)button {
-    NSInteger tag = button.tag;
-    if (tag) {
-        
+    UICollectionViewCell *cell = (UICollectionViewCell *)[button superview];
+    NSIndexPath *indexPath = [_menuView indexPathForCell:cell];
+    NSLog(@"indexPath is = %li",(long)indexPath.row);
+    NSInteger row = indexPath.row;
+    if (indexPath.section == 0) {
         FRPlist *plist = [[FRPlist alloc]init];
         NSMutableArray *selectMenu = (NSMutableArray *)[plist arrayWithPlistName:_slidePlistName];
         NSMutableArray *otherMenu = (NSMutableArray *)[plist arrayWithPlistName:_otherPlistName];
-        NSDictionary *dict = selectMenu[tag];
+        NSDictionary *dict = selectMenu[row];
         [otherMenu insertObject:dict atIndex:0];
-        [selectMenu removeObjectAtIndex:tag];
+        [selectMenu removeObjectAtIndex:row];
         //保存到plist文件
         [plist writeArray:selectMenu toPlist:_slidePlistName];
         [plist writeArray:otherMenu toPlist:_otherPlistName];
         
         self.menuArray = [NSMutableArray arrayWithObject:selectMenu];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:tag inSection:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:0];
         [self.menuView deleteItemsAtIndexPaths:@[indexPath]];
-        if (tag == _selectIndex) {//如果删除的item是当前展示的新闻分类，新闻分类展示变为默认的（头条）
+
+        if (row == _selectIndex) {//如果删除的item是当前展示的新闻分类，新闻分类展示变为默认的（头条）
             self.selectIndex = 0;
         }
     }
@@ -1069,6 +1092,38 @@
         self.menuArray = [NSMutableArray arrayWithObjects:selectMenu, otherMenu, nil];
         [self.menuView reloadData];
         [self.deleteBtn setTitle:@"排序删除" forState:UIControlStateNormal];
+    }
+}
+
+/**
+ *  移动collectionViewCell
+ *
+ *  @param longGesture 移动手势
+ */
+- (void)moveCollectionViewCell:(UILongPressGestureRecognizer *)longGesture {
+    
+    switch (longGesture.state) {
+        case UIGestureRecognizerStateBegan:{
+            //判断手势落点位置是否在路径上
+            NSIndexPath *indexPath = [self.menuView indexPathForItemAtPoint:[longGesture locationInView:self.menuView]];
+            if (indexPath == nil) {
+                break;
+            }
+            //在路径上则开始移动该路径上的cell
+            [self.menuView beginInteractiveMovementForItemAtIndexPath:indexPath];
+        }
+            break;
+        case UIGestureRecognizerStateChanged:
+            //移动过程当中随时更新cell位置
+            [self.menuView updateInteractiveMovementTargetPosition:[longGesture locationInView:self.menuView]];
+            break;
+        case UIGestureRecognizerStateEnded:
+            //移动结束后关闭cell移动
+            [self.menuView endInteractiveMovement];
+            break;
+        default:
+            [self.menuView cancelInteractiveMovement];
+            break;
     }
 }
 

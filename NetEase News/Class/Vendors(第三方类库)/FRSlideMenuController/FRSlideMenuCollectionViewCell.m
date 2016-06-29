@@ -36,7 +36,7 @@
         [self addSubview:deleteBtn];
         
         UILongPressGestureRecognizer *longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-        longPressGr.minimumPressDuration = 1.0;
+        longPressGr.minimumPressDuration = 0.7;
         _longPressGr = longPressGr;
     }
     return self;
@@ -56,17 +56,25 @@
 
 - (void)deleteBtnClick:(UIButton *)sender {
     if ([_delegate respondsToSelector:@selector(choseDeleteButton:)]) {
-        sender.tag = self.tag;
         [_delegate choseDeleteButton:sender];
     }
 }
 
--(void)longPressToDo:(UILongPressGestureRecognizer *)gesture
+-(void)longPressToDo:(UILongPressGestureRecognizer *)longGesture
 {
-    if(gesture.state == UIGestureRecognizerStateBegan)
-    {
-        if ([_delegate respondsToSelector:@selector(longPressButton)]) {
-            [_delegate longPressButton];
+    if (_deleteBtn.hidden) {
+        if(longGesture.state == UIGestureRecognizerStateBegan)
+        {
+            if ([_delegate respondsToSelector:@selector(longPressButton)]) {
+                [_delegate longPressButton];
+            }
+            
+            NSLog(@"手势");
+        }
+    }else {
+        NSLog(@"移动手势");
+        if ([_delegate respondsToSelector:@selector(moveCollectionViewCell:)]) {
+            [_delegate moveCollectionViewCell:longGesture];
         }
     }
 }
