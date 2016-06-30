@@ -66,7 +66,6 @@
     // 设置标题渐变
     [self setUpTitleGradient:^(BOOL *isShowTitleGradient, FRTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
         
-        // 不需要设置的属性，可以不管
         *isShowTitleGradient = YES;
         
         *titleColorGradientStyle = FRTitleColorGradientStyleRGB;
@@ -149,7 +148,7 @@
     NSArray *subviews = self.tabBarController.view.subviews;
     UITabBar *tabBarView = [subviews objectAtIndex:1];
     [UIView animateWithDuration:0.6 animations:^{
-        tabBarView.frame=CGRectMake(0, kSCreenHeight, kSCreenWidth, 49);
+        tabBarView.frame=CGRectMake(0, kScreenHeight, kScreenWidth, 49);
     }];
 }
 
@@ -160,7 +159,7 @@
     NSArray *subviews = self.tabBarController.view.subviews;
     UITabBar *tabBarView = [subviews objectAtIndex:1];
     [UIView animateWithDuration:0.6 animations:^{
-        tabBarView.frame=CGRectMake(0, kSCreenHeight-49, kSCreenWidth, 49);
+        tabBarView.frame=CGRectMake(0, kScreenHeight-49, kScreenWidth, 49);
     }];
 }
 

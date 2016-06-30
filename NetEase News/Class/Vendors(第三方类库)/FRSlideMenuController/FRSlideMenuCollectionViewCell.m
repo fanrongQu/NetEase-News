@@ -18,7 +18,7 @@
 
 
 - (instancetype)initWithFrame:(CGRect)frame{
-    self =[super initWithFrame:frame];
+    self = [super initWithFrame:frame];
     if (self) {
         frame.origin = CGPointMake(0, 0);
         UILabel *titleL = [[UILabel alloc] initWithFrame:frame];

@@ -17,9 +17,9 @@
 /** 屏幕大小 */
 #define kScreenBounds [UIScreen mainScreen].bounds
 /** 屏幕宽度 */
-#define kSCreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
 /** 屏幕高度 */
-#define kSCreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 /** 字体大小 */
 #define kFontSize(size) [UIFont systemFontOfSize:(size)]
 /** 系统版本 */

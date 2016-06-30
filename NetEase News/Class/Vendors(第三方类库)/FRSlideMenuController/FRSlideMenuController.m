@@ -213,6 +213,8 @@
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
+        //注册cell
+        [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
     }
     return _contentScrollView;
 }
@@ -748,17 +750,20 @@
     NSArray *otherArray = [plist arrayWithPlistName:otherName];
     self.menuArray = [NSMutableArray arrayWithObjects:slideArray, otherArray, nil];
     
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+    
     //新闻分类管理头部视图
-    CGRect menuTipViewF = CGRectMake(0, 64, kSCreenWidth, 40);
+    CGRect menuTipViewF = CGRectMake(0, 64, screenW, 40);
     self.menuTipView.frame = menuTipViewF;
     [self setmenuTipView:self.menuTipView];
     
     CGFloat maxmenuTipViewY = CGRectGetMaxY(menuTipViewF);
-    CGFloat menuViewH = kSCreenHeight - maxmenuTipViewY;
-    CGRect menuViewF = CGRectMake(0, maxmenuTipViewY - menuViewH, kSCreenWidth, menuViewH);
+    CGFloat menuViewH = screenH - maxmenuTipViewY;
+    CGRect menuViewF = CGRectMake(0, maxmenuTipViewY - menuViewH, screenW, menuViewH);
     self.menuView.frame = menuViewF;
     [UIView animateWithDuration:0.6 animations:^{
-        self.menuView.frame=CGRectMake(0, maxmenuTipViewY, kSCreenWidth, menuViewH);
+        self.menuView.frame=CGRectMake(0, maxmenuTipViewY, screenW, menuViewH);
     }];
 }
 
@@ -770,7 +775,9 @@
     Label.font = kFontSize(14);
     [menuTipView addSubview:Label];
     
-    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(kSCreenWidth- 40, 0, 40, 40)];
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenW- 40, 0, 40, 40)];
     [cancleBtn setImage:[UIImage imageNamed:@"hiddenMenuBtn"] forState:UIControlStateNormal];
     [cancleBtn setImage:[UIImage imageNamed:@"hiddenMenuBtn"] forState:UIControlStateHighlighted];
     [menuTipView addSubview:cancleBtn];
@@ -778,7 +785,7 @@
     [self rotationAnimationWithView:cancleBtn];
     _cancleBtn = cancleBtn;
     
-    CGRect deleteBtnF = CGRectMake(kSCreenWidth - 120, 9, 70, 22);
+    CGRect deleteBtnF = CGRectMake(screenW - 120, 9, 70, 22);
     UIButton *deleteBtn = [[UIButton alloc]initWithFrame:deleteBtnF];
     [deleteBtn.layer setMasksToBounds:YES];
     [deleteBtn.layer setCornerRadius:11];
@@ -798,12 +805,17 @@
  *  隐藏添加分类视图
  */
 - (void)cancleAddMenu:(UIButton *)button {
+    
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+    
     self.showDeleteBtn = NO;
     [self rotationAnimationWithView:button];
     [UIView animateWithDuration:0.6 animations:^{
+        
         CGFloat maxmenuTipViewY = CGRectGetMaxY(self.menuTipView.frame);
-        CGFloat menuViewH = kSCreenHeight - maxmenuTipViewY;
-        _menuView.frame = CGRectMake(0, maxmenuTipViewY - menuViewH, kSCreenWidth, menuViewH);
+        CGFloat menuViewH = screenH - maxmenuTipViewY;
+        _menuView.frame = CGRectMake(0, maxmenuTipViewY - menuViewH, screenW, menuViewH);
     }];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -856,7 +868,6 @@
 //        flowLayout.minimumLineSpacing = margin;
 //        flowLayout.minimumInteritemSpacing = margin;
         flowLayout.sectionInset = UIEdgeInsetsMake(margin, margin, margin, margin);
-//        flowLayout.footerReferenceSize = CGSizeMake(screenW, 25);
         
         _menuView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _menuView.dataSource = self;
