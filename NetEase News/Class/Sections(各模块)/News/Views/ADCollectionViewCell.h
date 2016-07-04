@@ -10,4 +10,12 @@
 
 @interface ADCollectionViewCell : UICollectionViewCell
 
+/**
+ *  设置轮播图片和标题
+ *
+ *  @param image 图片名
+ *  @param title 标题
+ */
+- (void)setADImage:(NSString *)image ADtitle:(NSString *)title;
+
 @end

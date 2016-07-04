@@ -53,7 +53,7 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
     
     if (!_isFirstLoad) {
     
-        self.newses = @[@"1",@"1",@"1",@"1"];
+        self.newses = @[@"轮播1",@"轮播2",@"轮播3",@"轮播4"];
         
         [self setTableHeaderView];
         
@@ -96,7 +96,6 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
     [headerView layoutIfNeeded];
     UIView *endView = [array lastObject];
     CGFloat headerViewH = endView.frame.size.height + endView.frame.origin.y;
-    headerViewH = headerViewH < self.view.frame.size.height ? self.view.frame.size.height : headerViewH;
     
     [headerView removeFromSuperview];
     [self headerViewWithHeight:headerViewH addToView:nil];
@@ -114,14 +113,14 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
     }
     
     [headerView addSubview:self.collectionView];
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(0);
         make.height.mas_equalTo(kScreenWidth * collectionViewWH);
     }];
     
-    [headerView addSubview:self.pageControl];
+    [headerView insertSubview:self.pageControl aboveSubview:_collectionView];
     [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-15);
+        make.bottom.mas_equalTo(2);
         make.right.mas_equalTo(-15);
     }];
     
@@ -172,6 +171,8 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
     
     ADCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CollectionViewCellID forIndexPath:indexPath];
     
+    NSString *title = [NSString stringWithFormat:@"%@--%@",self.title,_newses[indexPath.row]];
+    [cell setADImage:nil ADtitle:title];
     cell.backgroundColor = [UIColor redColor];
     return cell;
 }

@@ -32,6 +32,12 @@
     return self;
 }
 
+
+- (void)setADImage:(NSString *)image ADtitle:(NSString *)title {
+//    [self.ADImageView setImage:[UIImage imageNamed:image]];
+    self.describeLabel.text = title;
+}
+
 - (UIImageView *)ADImageView {
     if (!_ADImageView) {
         _ADImageView = [[UIImageView alloc]init];
