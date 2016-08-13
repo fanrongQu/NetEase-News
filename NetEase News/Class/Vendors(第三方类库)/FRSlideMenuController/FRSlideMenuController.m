@@ -48,8 +48,8 @@
 /* 是否初始化 */
 @property (nonatomic, assign) BOOL isInitial;
 
-/** 标题间距 */
-@property (nonatomic, assign) CGFloat titleMargin;
+/** 标题额外的宽度 */
+@property (nonatomic, assign) CGFloat titleExtraWidth;
 
 /** 计算上一次选中角标 */
 @property (nonatomic, assign) NSInteger selIndex;
@@ -284,10 +284,10 @@
 - (void)setIsShowAddMenuView:(BOOL)isShowAddMenuView {
     _isShowAddMenuView = isShowAddMenuView;
     if (isShowAddMenuView) {
-//        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin + addMenuViewW);
+//        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleExtraWidth + addMenuViewW);
         self.addMenuView.hidden = NO;
     }else {
-        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, margin);
         self.addMenuView.hidden = YES;
     }
 }
@@ -455,15 +455,15 @@
     //判断所有子控制器的title的长度之和能否占据整个屏幕
     CGFloat titleWidth = totalWidth + (count + 1) * margin;
     if (titleWidth > screenWidth) {
-        _titleMargin = margin;
+        _titleExtraWidth = 0;
 
         [self setIsShowAddMenuView:_isShowAddMenuView];
         return;
     }
     
-    CGFloat titleMargin = (screenWidth - totalWidth) / (count + 1);
+    CGFloat titleExtraWidth = (screenWidth - titleWidth) / count;
     
-    _titleMargin = titleMargin < margin? margin: titleMargin;
+    _titleExtraWidth = titleExtraWidth;
     
     [self setIsShowAddMenuView:_isShowAddMenuView];
 }
@@ -492,11 +492,11 @@
         // 设置按钮标题
         label.text = vc.title;
         
-        labelW = [self.titleWidths[i] floatValue];
+        labelW = [self.titleWidths[i] floatValue] + _titleExtraWidth;
         
         // 设置按钮位置
         UILabel *lastLabel = [self.titleLabels lastObject];
-        labelX = _titleMargin + CGRectGetMaxX(lastLabel.frame);
+        labelX = margin + CGRectGetMaxX(lastLabel.frame);
         label.frame = CGRectMake(labelX, labelY, labelW, labelH);
         
         // 监听标题的点击
@@ -638,7 +638,7 @@
     }
     
     // 计算下最大的标题视图滚动区域
-    CGFloat maxOffsetX = self.titleScrollView.contentSize.width - screenWidth + _titleMargin;
+    CGFloat maxOffsetX = self.titleScrollView.contentSize.width - screenWidth + margin;
     
     if (maxOffsetX < 0) {
         maxOffsetX = 0;
@@ -664,10 +664,10 @@
     CGFloat underLineY = label.frame.size.height - underLineH;
     CGFloat underLineW = self.underLine.frame.size.width;
     self.underLine.frame = CGRectMake(underLineX, underLineY, underLineW, underLineH);
-    
+
     // 最开始不需要动画
     if (self.underLine.frame.origin.x == 0) {
-        underLineW = titleBounds.size.width;
+        underLineW = titleBounds.size.width + _titleExtraWidth;
         underLineX = label.frame.origin.x;
         self.underLine.frame = CGRectMake(underLineX, underLineY, underLineW, underLineH);
         return;
@@ -677,7 +677,7 @@
     [UIView animateWithDuration:0.25 animations:^{
         CGRect frame = weakSelf.underLine.frame;
         frame.origin.x = label.frame.origin.x;
-        frame.size.width = titleBounds.size.width;
+        frame.size.width = titleBounds.size.width + weakSelf.titleExtraWidth;
         weakSelf.underLine.frame = frame;
     }];
     
@@ -790,11 +790,11 @@
     [deleteBtn.layer setMasksToBounds:YES];
     [deleteBtn.layer setCornerRadius:11];
     [deleteBtn.layer setBorderWidth:1.2];
-    [deleteBtn.layer setBorderColor:kSubjectColor_day.CGColor];
+    [deleteBtn.layer setBorderColor:[UIColor colorWithRed:218/255.0 green:16/255.0 blue:23/255.0 alpha:1].CGColor];
     
     deleteBtn.titleLabel.font = kFontSize(13);
     [deleteBtn setTitle:@"排序删除" forState:UIControlStateNormal];
-    [deleteBtn setTitleColor:kSubjectColor_day forState:UIControlStateNormal];
+    [deleteBtn setTitleColor:[UIColor colorWithRed:218/255.0 green:16/255.0 blue:23/255.0 alpha:1] forState:UIControlStateNormal];
     [deleteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [deleteBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     _deleteBtn = deleteBtn;
