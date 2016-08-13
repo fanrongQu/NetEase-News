@@ -25,7 +25,7 @@
     
     [self setNewsView];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clickMenuTitle:) name:FRSlideMenuClickMenuTitleNote object:nil];;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clickMenuTitle:) name:FRSlideMenuClickMenuTitleNote object:nil];
 }
 
 - (void)setNavigationBar {

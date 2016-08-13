@@ -99,6 +99,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
+
 #pragma mark - 控件懒加载
 - (UIFont *)titleFont {
     if (!_titleFont) {
@@ -426,6 +427,8 @@
         
         [self setUpAllTitle];
         
+        UIViewController *lastVC = self.childViewControllers[_selectIndex];
+        [lastVC viewWillAppear:animated];
     }
 }
 #pragma mark - 设置标题
@@ -1178,6 +1181,8 @@
         
         // 发出通知
         [[NSNotificationCenter defaultCenter] postNotificationName:FRSlideMenuClickOrScrollDidFinshNote object:vc];
+        
+        _selIndex = i;
     }
 }
 
@@ -1187,6 +1192,7 @@
 {
     _isAnimationing = NO;
 }
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

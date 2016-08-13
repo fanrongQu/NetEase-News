@@ -45,11 +45,11 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     //在这里设置代理，记得不用的时候需要置nil，否则影响内存的释放
-    self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
-    self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
     
     if (!_isFirstLoad) {
     
@@ -65,15 +65,21 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
     [self addTimer];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    //不用的时候代理置nil，否则影响内存的释放
-    self.tableView.dataSource = nil;
-    self.tableView.delegate = nil;
-    
-    self.collectionView.dataSource = nil;
-    self.collectionView.delegate = nil;
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     //在这里移除定时器，节省程序的运行内存
     [self removeTimer];
+    
+    //不用的时候代理置nil，否则影响内存的释放
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+    
+    self.collectionView.delegate = nil;
+    self.collectionView.dataSource = nil;
+    
+    NSLog(@"------%@\n\n\n\n",self.title);
 }
 
 
@@ -129,7 +135,7 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
 
 // 添加定时器
 -(void) addTimer{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:2.6 target:self selector:@selector(nextpage) userInfo:nil repeats:YES];
+    self.timer = [NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(nextpage) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
@@ -190,7 +196,7 @@ static NSString * const CollectionViewCellID = @"CollectionViewCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
