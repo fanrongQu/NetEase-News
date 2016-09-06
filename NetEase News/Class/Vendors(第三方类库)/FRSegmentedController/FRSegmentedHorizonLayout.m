@@ -15,7 +15,7 @@
     [super prepareLayout];
     self.minimumInteritemSpacing = 0;
     self.minimumLineSpacing = 0;
-    self.sectionInset = UIEdgeInsetsMake(-15, 0, 0, 0);
+    self.sectionInset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.headerReferenceSize = CGSizeMake(0, 0);
     if (self.collectionView.bounds.size.height) {
         

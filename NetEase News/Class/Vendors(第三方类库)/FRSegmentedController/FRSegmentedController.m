@@ -165,7 +165,7 @@ static NSString *ID = @"FRSegmentedCollectionCell";
 
 - (UIColor *)overColor {
     if (!_overColor) {
-        _overColor = [UIColor lightGrayColor];
+        _overColor = [UIColor grayColor];
     }
     return _overColor;
 }
@@ -256,7 +256,7 @@ static NSString *ID = @"FRSegmentedCollectionCell";
         
         UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _contentScrollView = contentScrollView;
-        _contentScrollView.backgroundColor = [UIColor greenColor];
+        _contentScrollView.backgroundColor = [UIColor grayColor];
         // 设置内容滚动视图
         _contentScrollView.pagingEnabled = YES;
         _contentScrollView.showsHorizontalScrollIndicator = NO;
@@ -385,8 +385,8 @@ static NSString *ID = @"FRSegmentedCollectionCell";
     // 添加控制器
     UIViewController *vc = self.childViewControllers[indexPath.row];
     
-    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
-    
+    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height - 64);
+
     [cell.contentView addSubview:vc.view];
     
     return cell;
