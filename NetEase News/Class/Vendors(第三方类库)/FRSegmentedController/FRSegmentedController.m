@@ -1,12 +1,12 @@
 //
-//  FRSegmentedControl.m
+//  FRSegmentedController.m
 //  NetEase News
 //
 //  Created by 1860 on 16/6/16.
 //  Copyright © 2016年 FanrongQu. All rights reserved.
 //
 
-#import "FRSegmentedControl.h"
+#import "FRSegmentedController.h"
 #import "FRSegmentedHorizonLayout.h"
 
 // Segment高度
@@ -18,7 +18,7 @@ static CGFloat const margin = 12;
 
 static NSString *ID = @"FRSegmentedCollectionCell";
 
-@interface FRSegmentedControl ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface FRSegmentedController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 //title的宽度
 @property (nonatomic, assign) CGFloat titleWidth;
@@ -45,11 +45,13 @@ static NSString *ID = @"FRSegmentedCollectionCell";
 
 @end
 
-@implementation FRSegmentedControl
+@implementation FRSegmentedController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationItem.titleView = self.segmentedView;
     
 }
 - (void)viewDidLayoutSubviews
@@ -228,16 +230,18 @@ static NSString *ID = @"FRSegmentedCollectionCell";
     if (!_segmentedView) {
         CGRect segmentedViewF = CGRectMake(0, 0, 100, FRSegmentH);
         UIView *segmentedView = [[UIView alloc]initWithFrame:segmentedViewF];
-        segmentedView.backgroundColor = self.normalBackColor;
         
         //设置圆角
         [segmentedView.layer setMasksToBounds:YES];
         [segmentedView.layer setCornerRadius:FRSegmentH * 0.5];
         //设置边框
         [segmentedView.layer setBorderWidth:1.2];
-        [segmentedView.layer setBorderColor:[self.selectBackColor CGColor]];
         _segmentedView = segmentedView;
     }
+    
+    _segmentedView.backgroundColor = self.normalBackColor;
+    [_segmentedView.layer setBorderColor:[self.selectBackColor CGColor]];
+    
     return _segmentedView;
 }
 

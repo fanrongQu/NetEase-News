@@ -6,8 +6,8 @@
 //  Copyright © 2016年 FanrongQu. All rights reserved.
 //
 
-#import "FRSegmentedControl.h"
+#import "FRSegmentedController.h"
 
-@interface ReadViewController : FRSegmentedControl
+@interface ReadViewController : FRSegmentedController
 
 @end

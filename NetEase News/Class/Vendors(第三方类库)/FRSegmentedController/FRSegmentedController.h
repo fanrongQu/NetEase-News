@@ -1,5 +1,5 @@
 //
-//  FRSegmentedControl.h
+//  FRSegmentedController.h
 //  NetEase News
 //
 //  Created by 1860 on 16/6/16.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FRSegmentedControl : UIViewController
+@interface FRSegmentedController : UIViewController
 
 /**
  *  title整体的视图

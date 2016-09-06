@@ -28,7 +28,6 @@
 
 - (void)setNavigtionBar {
     
-    self.navigationItem.titleView = self.segmentedView;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"readernewslist_headerbutton"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
 }
 
