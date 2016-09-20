@@ -28,6 +28,11 @@
     //创建按钮
     FRTabBarItem *item = [[FRTabBarItem alloc]init];
     [self addSubview:item];
+    
+    //按钮的颜色
+    item.normalColor = self.normalColor;
+    item.selectedColor = self.selectedColor;
+    
     // 添加按钮到数组中
     [self.tabBarItems addObject:item];
     

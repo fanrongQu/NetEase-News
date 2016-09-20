@@ -15,6 +15,9 @@
 
 @property (nonatomic, weak) FRBadge *badgeLabel;
 
+/**  初始化  */
+@property (nonatomic, assign) BOOL firstLoad;
+
 @end
 
 @implementation FRTabBarItem
@@ -30,6 +33,8 @@
         badgeLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
         [self addSubview:badgeLabel];
         self.badgeLabel = badgeLabel;
+        
+        self.firstLoad = YES;
     }
     return self;
 }
@@ -50,7 +55,7 @@
 {
     CGFloat titleY = contentRect.size.height * FRTabBarItemImageRatio;
     CGFloat titleW = contentRect.size.width;
-    CGFloat titleH = contentRect.size.height - titleY;
+    CGFloat titleH = contentRect.size.height - titleY - 2;
     return CGRectMake(0, titleY, titleW, titleH);
 }
 
@@ -85,21 +90,24 @@
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    
-    //根据图片设置文字颜色
-    UIColor *normalColor = [self mostColorWithImage:self.tabBarItem.image];
-    [self setTitleColor:normalColor forState:UIControlStateNormal];
-    UIColor *selectedColor = [self mostColorWithImage:self.tabBarItem.selectedImage];
-    [self setTitleColor:selectedColor forState:UIControlStateSelected];
-    
-    // 设置文字
-    [self setTitle:self.tabBarItem.title forState:UIControlStateSelected];
-    [self setTitle:self.tabBarItem.title forState:UIControlStateNormal];
-    
-    // 设置图片
-    [self setImage:[self compressImage:self.tabBarItem.image] forState:UIControlStateNormal];
-    [self setImage:[self compressImage:self.tabBarItem.selectedImage] forState:UIControlStateSelected];
-    
+    if (self.firstLoad) {
+        //根据图片设置文字颜色
+        UIColor *normalColor = self.normalColor ? self.normalColor : [self mostColorWithImage:self.tabBarItem.image];
+        [self setTitleColor:normalColor forState:UIControlStateNormal];
+        UIColor *selectedColor = self.selectedColor ? self.selectedColor : [self mostColorWithImage:self.tabBarItem.selectedImage];
+        [self setTitleColor:selectedColor forState:UIControlStateSelected];
+        
+        // 设置文字
+        [self setTitle:self.tabBarItem.title forState:UIControlStateSelected];
+        [self setTitle:self.tabBarItem.title forState:UIControlStateNormal];
+        
+        // 设置图片
+        [self setImage:[self compressImage:self.tabBarItem.image] forState:UIControlStateNormal];
+        [self setImage:[self compressImage:self.tabBarItem.selectedImage] forState:UIControlStateSelected];
+        
+        
+        self.firstLoad = NO;
+    }
     // 设置提醒数字
     self.badgeLabel.badgeValue = self.tabBarItem.badgeValue;
     
@@ -117,7 +125,11 @@
 - (UIImage *)compressImage:(UIImage *)image
 {
     CGSize size = image.size;
-    CGFloat width = 20;
+    CGFloat width = 22;
+    if (size.width <= width && size.height <= width) {
+        return image;
+    }
+    
     CGFloat height = width * size.height / size.width;
     size = CGSizeMake(width, height);
     UIGraphicsBeginImageContext(size);

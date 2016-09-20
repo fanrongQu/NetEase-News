@@ -10,6 +10,11 @@
 
 @interface FRTabBarItem : UIButton
 
+/**  普通状态item的颜色  */
+@property (nonatomic, strong) UIColor *normalColor;
+/**  选中状态item的颜色  */
+@property (nonatomic, strong) UIColor *selectedColor;
+
 @property (nonatomic, strong) UITabBarItem *tabBarItem;
 
 @end
