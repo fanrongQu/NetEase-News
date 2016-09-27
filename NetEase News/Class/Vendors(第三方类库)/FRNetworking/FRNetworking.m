@@ -57,34 +57,34 @@ static AFHTTPSessionManager *manager = nil;
  
  @see -dataTaskWithRequest:uploadProgress:downloadProgress:completionHandler:
  */
-+ (void)getWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)getWithURLString:(NSString *)URLString
               parameters:(NSDictionary *)parameters
                 progress:(void (^)(NSProgress *downloadProgress)) progress
                  success:(void (^)(id responseObject))success
                  failure:(void (^)(NSError *error))failure{
     NSString *url = [URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"url = %@ \n\nparameters = %@",url,parameters);
-    [[self shareSessionManager] GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSLog(@"\n请求URL = %@\n请求Dict = %@",URLString,parameters);
+    return [[self shareSessionManager] GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         if (progress) {
             progress(downloadProgress);
         }
     }  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
             success(responseObject);
-            NSLog(@"responseObject = %@",responseObject);        }
+            NSLog(@"\nresponseObject = %@",responseObject);        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
-            NSLog(@"error = %@",error);
+            NSLog(@"\nerror = %@",error);
         }
     }];
 }
 
-+ (void)getWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)getWithURLString:(NSString *)URLString
               parameters:(NSDictionary *)parameters
                  success:(void (^)(id responseObject))success
                  failure:(void (^)(NSError *error))failure {
-    [self getWithURLString:URLString parameters:parameters progress:^(NSProgress *downloadProgress) {
+    return [self getWithURLString:URLString parameters:parameters progress:^(NSProgress *downloadProgress) {
     } success:^(id responseObject) {
         if (success) {
             success(responseObject);
@@ -108,35 +108,37 @@ static AFHTTPSessionManager *manager = nil;
  
  @see -dataTaskWithRequest:uploadProgress:downloadProgress:completionHandler:
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
               parameters:(NSDictionary *)parameters
                 progress:(void (^)(NSProgress *downloadProgress)) progress
                  success:(void (^)(id responseObject))success
                  failure:(void (^)(NSError *error))failure{
     
     NSString *url = [URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"url = %@ \n\nparameters = %@",url,parameters);
-    [[self shareSessionManager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSLog(@"\n请求URL = %@\n请求Dict = %@",URLString,parameters);
+    return [[self shareSessionManager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
             success(responseObject);
+            NSLog(@"\nresponseObject = %@",responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
+            NSLog(@"\nerror = %@",error);
         }
     }];
 }
 
 
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
                   success:(void (^)(id responseObject))success
                   failure:(void (^)(NSError *error))failure {
-    [self postWithURLString:URLString parameters:parameters progress:^(NSProgress *downloadProgress) {
+    return [self postWithURLString:URLString parameters:parameters progress:^(NSProgress *downloadProgress) {
         
     } success:^(id responseObject) {
         if (success) {
@@ -162,7 +164,7 @@ static AFHTTPSessionManager *manager = nil;
  
  @see -dataTaskWithRequest:uploadProgress:downloadProgress:completionHandler:
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
 constructingBodyWithBlock:(FRFormData *)formDate
                  progress:(void (^)(NSProgress *downloadProgress)) progress
@@ -170,8 +172,8 @@ constructingBodyWithBlock:(FRFormData *)formDate
                   failure:(void (^)(NSError *error))failure{
     
     NSString *url = [URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"url = %@ \n\nparameters = %@ \n\ndata = %@\n\nname = %@\n\nfileName = %@\n\nmimeType = %@",url,parameters,formDate.data,formDate.name,formDate.fileName,formDate.mimeType);
-    [[self shareSessionManager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSLog(@"\n请求URL = %@     \n请求parameters = %@      \n请求data = %@      \n请求name = %@      \n请求fileName = %@      \n请求mimeType = %@",url,parameters,formDate.data,formDate.name,formDate.fileName,formDate.mimeType);
+    return [[self shareSessionManager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileData:formDate.data name:formDate.name fileName:formDate.fileName mimeType:formDate.mimeType];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
@@ -180,20 +182,22 @@ constructingBodyWithBlock:(FRFormData *)formDate
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
             success(responseObject);
+            NSLog(@"\nresponseObject = %@",responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
+            NSLog(@"\nerror = %@",error);
         }
     }];
 }
 
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
 constructingBodyWithBlock:(FRFormData *)frFormDate
                   success:(void (^)(id responseObject))success
                   failure:(void (^)(NSError *error))failure {
-    [self postWithURLString:URLString parameters:parameters constructingBodyWithBlock:frFormDate progress:^(NSProgress *downloadProgress) {
+    return [self postWithURLString:URLString parameters:parameters constructingBodyWithBlock:frFormDate progress:^(NSProgress *downloadProgress) {
         
     } success:^(id responseObject) {
         if (success) {

@@ -28,7 +28,7 @@
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)getWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)getWithURLString:(NSString *)URLString
               parameters:(NSDictionary *)parameters
                  success:(void (^)(id responseObject))success
                  failure:(void (^)(NSError *error))failure;
@@ -41,7 +41,7 @@
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)getWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)getWithURLString:(NSString *)URLString
  parameters:(NSDictionary *)parameters
    progress:(void (^)(NSProgress *downloadProgress)) downloadProgress
     success:(void (^)(id responseObject))success
@@ -55,7 +55,7 @@
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
                   success:(void (^)(id responseObject))success
                   failure:(void (^)(NSError *error))failure;
@@ -69,7 +69,7 @@
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
                  progress:(void (^)(NSProgress *downloadProgress)) progress
                   success:(void (^)(id responseObject))success
@@ -83,7 +83,7 @@
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
 constructingBodyWithBlock:(FRFormData *)frFormDate
                   success:(void (^)(id responseObject))success
@@ -98,7 +98,7 @@ constructingBodyWithBlock:(FRFormData *)frFormDate
  *  @param success          请求成功后的回调
  *  @param failure          请求失败后的回调
  */
-+ (void)postWithURLString:(NSString *)URLString
++ (NSURLSessionDataTask *)postWithURLString:(NSString *)URLString
                parameters:(NSDictionary *)parameters
 constructingBodyWithBlock:(FRFormData *)formDate
                  progress:(void (^)(NSProgress *downloadProgress)) progress
