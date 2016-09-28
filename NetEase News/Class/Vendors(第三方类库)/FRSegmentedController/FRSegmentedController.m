@@ -263,6 +263,7 @@ static NSString *ID = @"FRSegmentedCollectionCell";
         _contentScrollView.bounces = NO;
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
+        _contentScrollView.allowsSelection = NO;
         
         [self.view addSubview:contentScrollView];
         

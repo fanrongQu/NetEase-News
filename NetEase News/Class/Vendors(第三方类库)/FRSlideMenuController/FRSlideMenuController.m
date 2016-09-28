@@ -213,6 +213,8 @@
         _contentScrollView.bounces = NO;
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
+        _contentScrollView.allowsSelection = NO;
+        
         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         //注册cell
         [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
