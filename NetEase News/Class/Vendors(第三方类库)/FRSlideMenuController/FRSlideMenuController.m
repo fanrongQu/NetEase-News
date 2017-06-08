@@ -87,6 +87,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self initial];
 }
 
@@ -96,7 +97,7 @@
     _titleHeight = FRTitleScrollViewH;
     //automaticallyAdjustsScrollViewInsets根据按所在界面的status bar，navigationbar，与tabbar的高度，自动调整scrollview的 inset
     //这里设置为no，不让viewController调整，我们自己修改布局
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = false;
 }
 
 
@@ -213,8 +214,6 @@
         _contentScrollView.bounces = NO;
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
-        _contentScrollView.allowsSelection = NO;
-        
         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         //注册cell
         [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
@@ -358,7 +357,7 @@
         titleEffectBlock(&_isShowAddMenuView,&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
         _norColor = norColor;
         _selColor = selColor;
-        _titleScrollViewColor = titleScrollViewColor;
+        self.titleScrollViewColor = titleScrollViewColor;
         _titleFont = titleFont;
     }
 }
@@ -445,7 +444,7 @@
         //判断title是否为nil
         if ([title isKindOfClass:[NSNull class]]) {
             //如果控制器没有设置title，抛出异常
-            NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"没有设置Controller.title属性，应该把子标题保存到对应子控制器中" userInfo:nil];
+            NSException *excp = [NSException exceptionWithName:@"FRDisplayViewControllerException" reason:@"没有设置Controller.title属性，应该把子标题保存到对应子控制器中" userInfo:nil];
             [excp raise];
         }
         //根据文字内容和字体大小获取文字占据的bounds
@@ -1184,6 +1183,10 @@
         // 发出通知
         [[NSNotificationCenter defaultCenter] postNotificationName:FRSlideMenuClickOrScrollDidFinshNote object:vc];
         
+        //释放上一个控制器的代理
+        UIViewController *lastVC = self.childViewControllers[_selIndex];
+        [lastVC viewWillDisappear:YES];
+        
         _selIndex = i;
     }
 }
@@ -1194,7 +1197,6 @@
 {
     _isAnimationing = NO;
 }
-
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
