@@ -278,7 +278,7 @@
 {
     _isfullScreen = isfullScreen;
     if (isfullScreen) {
-        CGSize size = [UIScreen mainScreen].bounds.size;
+        CGSize size = self.view.bounds.size;
         self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
     }
 }
@@ -378,9 +378,9 @@
     [super viewDidLayoutSubviews];
     //设置视图内容大小
     CGFloat contentX = 0;
-    CGFloat contentY = self.navigationController?FRNavBarH : [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 2 * contentX;
-    CGFloat contentH = [UIScreen mainScreen].bounds.size.height - contentY;
+    CGFloat contentY = (self.navigationController && self.navigationController.navigationBar.translucent) ?FRNavBarH : 0;
+    CGFloat contentW = self.view.bounds.size.width - 2 * contentX;
+    CGFloat contentH = self.view.bounds.size.height - contentY;
     // 设置整个内容的尺寸
     if (self.contentView.bounds.size.height == 0) {
         // 没有设置内容尺寸，才需要设置内容尺寸
@@ -393,12 +393,12 @@
     self.titleScrollView.frame = CGRectMake(contentX, titleY, contentW, titleH);
     
     //添加按钮frame
-    CGFloat addMenuViewX = [UIScreen mainScreen].bounds.size.width - addMenuViewW;
+    CGFloat addMenuViewX = self.view.bounds.size.width - addMenuViewW;
     self.addMenuView.frame = CGRectMake(addMenuViewX, contentY, addMenuViewW, titleH);
     
     // 设置内容滚动视图frame
     CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
-    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, [UIScreen mainScreen].bounds.size.height) :CGRectMake(0, contentScrollY, contentW, self.contentView.bounds.size.height - contentScrollY);
+    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, self.view.bounds.size.height) :CGRectMake(0, contentScrollY, contentW, self.contentView.bounds.size.height - contentScrollY);
     
 }
 
@@ -455,7 +455,7 @@
         
         totalWidth += width;
     }
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenWidth = self.view.bounds.size.width;
     //判断所有子控制器的title的长度之和能否占据整个屏幕
     CGFloat titleWidth = totalWidth + (count + 1) * margin;
     if (titleWidth > screenWidth) {
@@ -525,7 +525,7 @@
     }
     _titleScrollView.contentSize = CGSizeMake(titleContentX, 0);
     _titleScrollView.showsHorizontalScrollIndicator = NO;
-    _contentScrollView.contentSize = CGSizeMake(count * [UIScreen mainScreen].bounds.size.width, 0);
+    _contentScrollView.contentSize = CGSizeMake(count * self.view.bounds.size.width, 0);
 }
 
 #pragma mark - 标题点击处理
@@ -557,7 +557,7 @@
     [self selectLabel:label];
     
     // 内容滚动视图滚动到对应位置
-    CGFloat offsetX = i * [UIScreen mainScreen].bounds.size.width;
+    CGFloat offsetX = i * self.view.bounds.size.width;
     
     self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
     
@@ -633,7 +633,7 @@
 // 让选中的按钮居中显示
 - (void)setLabelTitleCenter:(UILabel *)label
 {
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenWidth = self.view.bounds.size.width;
     // 设置标题滚动区域的偏移量
     CGFloat offsetX = label.center.x - screenWidth * 0.5;
     
@@ -754,8 +754,8 @@
     NSArray *otherArray = [plist arrayWithPlistName:otherName];
     self.menuArray = [NSMutableArray arrayWithObjects:slideArray, otherArray, nil];
     
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+    CGFloat screenW = self.view.bounds.size.width;
+    CGFloat screenH = self.view.bounds.size.height;
     
     //新闻分类管理头部视图
     CGRect menuTipViewF = CGRectMake(0, 64, screenW, 40);
@@ -779,7 +779,7 @@
     Label.font = kFontSize(14);
     [menuTipView addSubview:Label];
     
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenW = self.view.bounds.size.width;
     
     UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenW- 40, 0, 40, 40)];
     [cancleBtn setImage:[UIImage imageNamed:@"hiddenMenuBtn"] forState:UIControlStateNormal];
@@ -810,8 +810,8 @@
  */
 - (void)cancleAddMenu:(UIButton *)button {
     
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+    CGFloat screenW = self.view.bounds.size.width;
+    CGFloat screenH = self.view.bounds.size.height;
     
     self.showDeleteBtn = NO;
     [self rotationAnimationWithView:button];
@@ -861,7 +861,7 @@
 
 - (UICollectionView *)menuView {
     if (!_menuView) {
-        CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+        CGFloat screenW = self.view.bounds.size.width;
         CGFloat itemW = 75;
         CGFloat itemH = 30;
         CGFloat margin = (screenW - itemW * 4)/5;
@@ -1029,7 +1029,7 @@
     if (section == 0) {
         return CGSizeMake(0, 0);
     }
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width, 25);
+    return CGSizeMake(self.view.bounds.size.width, 25);
 }
 
 
@@ -1151,7 +1151,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (scrollView == self.contentScrollView) {
-        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+        CGFloat screenWidth = self.view.bounds.size.width;
         
         CGFloat offsetX = scrollView.contentOffset.x;
         NSInteger offsetXInt = offsetX;
@@ -1201,7 +1201,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.contentScrollView) {
-        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+        CGFloat screenWidth = self.view.bounds.size.width;
         // 点击和动画的时候不需要设置
         if (_isAnimationing || self.titleLabels.count == 0) return;
         
@@ -1251,7 +1251,7 @@
     if (_isShowTitleGradient == NO) return;
     
     // 获取右边缩放
-    CGFloat rightSacle = offsetX / [UIScreen mainScreen].bounds.size.width - leftLabel.tag;
+    CGFloat rightSacle = offsetX / self.view.bounds.size.width - leftLabel.tag;
     
     // 获取左边缩放比例
     CGFloat leftScale = 1 - rightSacle;
@@ -1316,7 +1316,7 @@
     if (_isShowTitleScale == NO) return;
     
     // 获取右边缩放
-    CGFloat rightSacle = offsetX / [UIScreen mainScreen].bounds.size.width - leftLabel.tag;
+    CGFloat rightSacle = offsetX / self.view.bounds.size.width - leftLabel.tag;
     
     CGFloat leftScale = 1 - rightSacle;
     
@@ -1354,7 +1354,7 @@
     
     // 获取移动距离
     CGFloat offsetDelta = offsetX - _lastOffsetX;
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenWidth = self.view.bounds.size.width;
     // 计算当前下划线偏移量
     CGFloat underLineTransformX = offsetDelta * centerDelta / screenWidth;
     
@@ -1382,7 +1382,7 @@
     CGFloat offsetDelta = offsetX - _lastOffsetX;
     
     
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenWidth = self.view.bounds.size.width;
     
     // 计算当前下划线偏移量
     CGFloat coverTransformX = offsetDelta * centerDelta / screenWidth;
