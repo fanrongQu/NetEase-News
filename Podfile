@@ -11,6 +11,6 @@ pod 'MBProgressHUD', ‘~> 0.9.2’
 pod 'MJExtension’, ‘~> 3.0.10’
 pod 'MJRefresh’, ‘~> 3.1.0’
 pod 'SDWebImage’, ‘~> 3.7.5’
-pod 'ReactiveCocoa', '~> 4.1.0'
+pod 'ReactiveObjC', '~> 3.0.0’
 
 end

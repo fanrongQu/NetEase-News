@@ -34,7 +34,7 @@
  *               http://www.jianshu.com/p/e10e5ca413b7
  *               http://benbeng.leanote.com/post/ReactiveCocoaTutorial-part1
  */
-#import "ReactiveCocoa.h"
+#import "ReactiveObjC.h"
 
 
 
